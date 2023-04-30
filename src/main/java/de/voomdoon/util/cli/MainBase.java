@@ -38,12 +38,28 @@ public abstract class MainBase {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method getName
+	 * 
+	 * @return
+	 * @since DOCME add inception version number
+	 */
+	protected abstract String getName();
+
+	/**
 	 * DOCME add JavaDoc for method run
 	 * 
 	 * @since 0.1.0
 	 */
 	protected void run() {
+		if (args.length > 0 && args[0].equals("--help")) {
+			printHelp();
+			return;
+		}
+
 		Class<?> clazz = subMains.get(args[0]);
+
+		// FEATURE error if no match
+
 		Method method;
 
 		try {
@@ -59,5 +75,25 @@ public abstract class MainBase {
 			// TODO implement error handling
 			throw new IllegalStateException("Error at 'startProgram': " + e.getMessage(), e);
 		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for method printHelp
+	 * 
+	 * @since DOCME add inception version number
+	 */
+	private void printHelp() {
+		println(getName());
+		// FEATURE print sub-mains with key
+	}
+
+	/**
+	 * DOCME add JavaDoc for method println
+	 * 
+	 * @param message
+	 * @since DOCME add inception version number
+	 */
+	private void println(String message) {
+		System.out.println(message);
 	}
 }

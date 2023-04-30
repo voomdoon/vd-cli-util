@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
+import de.voomdoon.util.commons.Output;
 
 /**
  * DOCME add JavaDoc for
@@ -44,6 +45,14 @@ class MainBaseTest {
 			 */
 			MyMain(String[] args, Map<String, Class<?>> subMains) {
 				super(args, subMains);
+			}
+
+			/**
+			 * @since DOCME add inception version number
+			 */
+			@Override
+			protected String getName() {
+				return "My-Main";
 			}
 		}
 
@@ -86,6 +95,22 @@ class MainBaseTest {
 			new MyMain(new String[] { "a", "test" }, Map.of("a", MySubMainA.class)).run();
 
 			assertThat(MySubMainA.ARGS).isEqualTo(new String[] { "test" });
+		}
+
+		/**
+		 * DOCME add JavaDoc for method test_help_containsName
+		 * 
+		 * @since DOCME add inception version number
+		 */
+		@Test
+		void test_help_containsName() throws Exception {
+			logTestStart();
+
+			MyMain main = new MyMain(new String[] { "--help" }, Map.of());
+
+			Output output = Output.run(() -> main.run());
+
+			assertThat(output).extracting(Output::getOut).asString().contains("My-Main");
 		}
 	}
 }
