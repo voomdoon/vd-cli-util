@@ -41,7 +41,7 @@ public abstract class MainBase {
 	 * DOCME add JavaDoc for method getName
 	 * 
 	 * @return
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	protected abstract String getName();
 
@@ -80,7 +80,7 @@ public abstract class MainBase {
 	/**
 	 * DOCME add JavaDoc for method printHelp
 	 * 
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	private void printHelp() {
 		println(getName());
@@ -91,7 +91,7 @@ public abstract class MainBase {
 	 * DOCME add JavaDoc for method println
 	 * 
 	 * @param message
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	private void println(String message) {
 		System.out.println(message);

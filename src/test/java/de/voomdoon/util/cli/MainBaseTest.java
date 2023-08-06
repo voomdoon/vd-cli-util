@@ -48,7 +48,7 @@ class MainBaseTest {
 			}
 
 			/**
-			 * @since DOCME add inception version number
+			 * @since 0.1.0
 			 */
 			@Override
 			protected String getName() {
@@ -100,7 +100,7 @@ class MainBaseTest {
 		/**
 		 * DOCME add JavaDoc for method test_help_containsName
 		 * 
-		 * @since DOCME add inception version number
+		 * @since 0.1.0
 		 */
 		@Test
 		void test_help_containsName() throws Exception {
