@@ -1,7 +1,5 @@
 package de.voomdoon.util.cli;
 
-import java.lang.reflect.Constructor;
-
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
 
@@ -21,16 +19,8 @@ public abstract class Program {
 	 * @param args
 	 * @since 0.1.0
 	 */
-	public static void run(Class<? extends Program> clazz, String[] args) {
-		try {
-			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor(String[].class);
-			constructor.setAccessible(true);
-			Program program = constructor.newInstance(new Object[] { args });
-			program.runProgram();
-		} catch (Exception e) {
-			// TODO implement error handling
-			throw new RuntimeException("Error at 'run': " + e.getMessage(), e);
-		}
+	public static void run(String[] args) {
+		ProgramRunUtil.run(args);
 	}
 
 	/**

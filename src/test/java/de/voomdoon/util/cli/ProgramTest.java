@@ -75,6 +75,16 @@ class ProgramTest extends LoggingCheckingTestBase {
 			private static Optional<TestProgram> INSTANCE = Optional.empty();
 
 			/**
+			 * DOCME add JavaDoc for method run
+			 * 
+			 * @param args
+			 * @since 0.1.0
+			 */
+			public static void run(String[] args) {
+				Program.run(args);
+			}
+
+			/**
 			 * @since 0.1.0
 			 */
 			private Optional<String[]> constructorArgs = Optional.empty();
@@ -117,7 +127,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 		void test_constructor_args() throws Exception {
 			logTestStart();
 
-			Program.run(TestProgram.class, new String[] { "test" });
+			TestProgram.run(new String[] { "test" });
 
 			assertThat(TestProgram.INSTANCE).isPresent();
 			assertThat(TestProgram.INSTANCE.get().constructorArgs.get()).contains("test");
@@ -133,7 +143,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 		void test_runProgram_called() throws Exception {
 			logTestStart();
 
-			Program.run(TestProgram.class, new String[0]);
+			TestProgram.run(new String[0]);
 
 			assertThat(TestProgram.INSTANCE).isPresent();
 			assertThat(TestProgram.INSTANCE.get().runProgramCallCount).hasValue(1);
