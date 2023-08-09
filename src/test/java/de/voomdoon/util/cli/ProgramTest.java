@@ -166,45 +166,4 @@ class ProgramTest extends LoggingCheckingTestBase {
 		assertThat(getLogCache().getLogEvents(LogLevel.DEBUG).get(0)).extracting(LogEvent::getMessage)
 				.isEqualTo("test");
 	}
-
-	/**
-	 * DOCME add JavaDoc for method getLogEvent
-	 * 
-	 * @param timestamp
-	 * @param sourceClass
-	 * @param level
-	 * @param message
-	 * @return
-	 * @since 0.1.0
-	 */
-	private LogEvent getLogEvent(long timestamp, Class<?> sourceClass, LogLevel level, Object message) {
-		return new LogEvent() {
-
-			@Override
-			public Throwable getError() {
-				// TODO implement getError
-				throw new UnsupportedOperationException("'getError' not implemented at 'Type1682868671772'!");
-			}
-
-			@Override
-			public LogLevel getLevel() {
-				return level;
-			}
-
-			@Override
-			public Object getMessage() {
-				return message;
-			}
-
-			@Override
-			public Class<?> getSourceClass() {
-				return sourceClass;
-			}
-
-			@Override
-			public long getTimestamp() {
-				return timestamp;
-			}
-		};
-	}
 }
