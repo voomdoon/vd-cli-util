@@ -35,7 +35,7 @@ public abstract class Program {
 	 * @since 0.1.0
 	 */
 	protected Program(String[] args) {
-
+		// TODO parse arguments
 	}
 
 	/**
