@@ -58,7 +58,9 @@ public abstract class MainBase {
 
 		Class<?> clazz = subMains.get(args[0]);
 
-		// FEATURE error if no match
+		if (clazz == null) {
+			throw new ProgramRunException("Failed to find sub-main for '" + args[0] + "!", getHelpString());
+		}
 
 		Method method;
 
@@ -78,13 +80,29 @@ public abstract class MainBase {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method getHelpString
+	 * 
+	 * @return
+	 * @since 0.1.0
+	 */
+	private String getHelpString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("sub-mains:");
+		subMains.entrySet().stream().sorted((e1, e2) -> e1.getKey().compareToIgnoreCase(e2.getKey()))
+				.forEach(e -> sb.append("\n• ").append(e.getKey()));
+		// TODO add description of sub-main
+
+		return sb.toString();
+	}
+
+	/**
 	 * DOCME add JavaDoc for method printHelp
 	 * 
 	 * @since 0.1.0
 	 */
 	private void printHelp() {
 		println(getName());
-		// FEATURE print sub-mains with key
+		println(getHelpString());
 	}
 
 	/**
