@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
@@ -26,7 +27,8 @@ class MainBaseTest {
 	 *
 	 * @since 0.1.0
 	 */
-	static class RunTest extends TestBase {
+	@Nested
+	class RunTest extends TestBase {
 
 		/**
 		 * DOCME add JavaDoc for MainBaseTest.RunTest
