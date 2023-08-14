@@ -17,7 +17,7 @@ public class ProgramRunException extends RuntimeException {
 	/**
 	 * @since 0.1.0
 	 */
-	private String helpString;
+	private final String helpString;
 
 	/**
 	 * DOCME add JavaDoc for constructor ProgramRunException
@@ -40,6 +40,8 @@ public class ProgramRunException extends RuntimeException {
 	 */
 	public ProgramRunException(Throwable cause) {
 		super(cause);
+
+		this.helpString = null;
 	}
 
 	/**
