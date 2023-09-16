@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.commons.Output;
+import de.voomdoon.util.commons.SystemOutput;
 
 /**
  * DOCME add JavaDoc for
@@ -111,9 +111,9 @@ class MainBaseTest {
 
 			MyMain main = new MyMain(new String[] { "--help" }, Map.of());
 
-			Output output = Output.run(() -> main.run());
+			SystemOutput output = SystemOutput.run(() -> main.run());
 
-			assertThat(output).extracting(Output::getOut).asString().contains("My-Main");
+			assertThat(output).extracting(SystemOutput::getOut).asString().contains("My-Main");
 		}
 
 		/**
