@@ -48,10 +48,12 @@ public abstract class MainBase {
 	/**
 	 * DOCME add JavaDoc for method run
 	 * 
+	 * @throws InvalidSubProgramException
+	 * 
 	 * @since 0.1.0
 	 */
-	protected void run() {
-		if (args.length > 0 && args[0].equals("--help")) {
+	protected void run() throws InvalidSubProgramException {
+		if (args.length == 0 || args[0].equals("--help")) {
 			printHelp();
 			return;
 		}
@@ -62,20 +64,30 @@ public abstract class MainBase {
 			throw new ProgramRunException("Failed to find sub-main for '" + args[0] + "!", getHelpString());
 		}
 
-		Method method;
+		Method method = getMainMethod(clazz);
 
-		try {
-			method = clazz.getMethod("main", String[].class);
-		} catch (NoSuchMethodException | SecurityException e) {
-			// TODO implement error handling
-			throw new IllegalStateException("Error at 'startProgram': " + e.getMessage(), e);
-		}
+		Object subArgs = ArrayUtils.remove(args, 0);
 
+		executeMainMethod(method, subArgs);
+	}
+
+	/**
+	 * DOCME add JavaDoc for method executeMainMethod
+	 * 
+	 * @param method
+	 * @param subArgs
+	 * @since 0.1.0
+	 */
+	private void executeMainMethod(Method method, Object subArgs) {
 		try {
-			method.invoke(null, (Object) ArrayUtils.remove(args, 0));
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			// TODO implement error handling
-			throw new IllegalStateException("Error at 'startProgram': " + e.getMessage(), e);
+			method.invoke(null, subArgs);
+		} catch (IllegalAccessException e) {
+			throw new IllegalStateException("Error at 'invoke': " + e.getMessage(), e);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalStateException("Error at 'invoke': " + e.getMessage(), e);
+		} catch (InvocationTargetException e) {
+			// TODO implement error handling ProgramRunException
+			throw new IllegalStateException("Error at 'invoke': " + e.getMessage(), e);
 		}
 	}
 
@@ -93,6 +105,34 @@ public abstract class MainBase {
 		// TODO add description of sub-main
 
 		return sb.toString();
+	}
+
+	/**
+	 * DOCME add JavaDoc for method getMainMethod
+	 * 
+	 * @param clazz
+	 * @return
+	 * @throws InvalidSubProgramException
+	 * @since 0.1.0
+	 */
+	private Method getMainMethod(Class<?> clazz) throws InvalidSubProgramException {
+		Method method;
+
+		try {
+			method = clazz.getMethod("main", String[].class);
+		} catch (NoSuchMethodException e) {
+			throw new InvalidSubProgramException(e);
+		} catch (SecurityException e) {
+			throw new IllegalStateException("Error at 'getMethod': " + e.getMessage(), e);
+		}
+
+		boolean isStatic = (method.getModifiers() & java.lang.reflect.Modifier.STATIC) != 0;
+
+		if (!isStatic) {
+			throw new InvalidSubProgramException("Method 'main' must be static!");
+		}
+
+		return method;
 	}
 
 	/**
