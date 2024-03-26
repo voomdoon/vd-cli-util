@@ -14,7 +14,7 @@
 
 	<dependencies>
 		<!-- + + + + + + + + + + compile dependencies + + + + + + + + + + -->
-		<!-- + + + + + internal voomdoon dependencies + + + + + -->
+		<!-- + + + + + internal voomdoon compile dependencies + + + + + -->
 		<dependency>
 			<groupId>de.voomdoon.logging</groupId>
 			<artifactId>vd-logging</artifactId>
@@ -22,7 +22,7 @@
 		</dependency>
 		<!-- - - - - - internal voomdoon compile dependencies - - - - - -->
 
-		<!-- + + + + + external dependencies + + + + + -->
+		<!-- + + + + + external compile dependencies + + + + + -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
