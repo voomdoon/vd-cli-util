@@ -12,7 +12,7 @@ import lombok.experimental.UtilityClass;
  * @since 0.1.0
  */
 @UtilityClass
-public class ProgramRunUtil {
+class ProgramRunUtil {
 
 	/**
 	 * DOCME add JavaDoc for method run
@@ -51,9 +51,10 @@ public class ProgramRunUtil {
 	 */
 	private static void run(Class<? extends Program> clazz, String[] args) {
 		try {
-			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor(String[].class);
+			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor();
 			constructor.setAccessible(true);
-			Program program = constructor.newInstance((Object) args);
+			Program program = constructor.newInstance();
+			program.init(args);
 			program.runProgram();
 		} catch (Exception e) {
 			// TODO implement error handling
