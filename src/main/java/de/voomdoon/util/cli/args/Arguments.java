@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import de.voomdoon.util.cli.InvalidProgramArgumentsException;
+
 /**
  * DOCME add JavaDoc for
  *
@@ -34,9 +36,10 @@ public class Arguments {
 	 * 
 	 * @param args
 	 * @param options
+	 * @throws InvalidProgramArgumentsException
 	 * @since 0.1.0
 	 */
-	public Arguments(String[] args, Set<Option> options) {
+	public Arguments(String[] args, Set<Option> options) throws InvalidProgramArgumentsException {
 		this.args = new LinkedList<>(Arrays.asList(args));
 
 		parseOptions(options);
@@ -83,10 +86,11 @@ public class Arguments {
 	 * DOCME add JavaDoc for method parseOptions
 	 * 
 	 * @param options
+	 * @throws InvalidProgramArgumentsException
 	 * 
 	 * @since 0.1.0
 	 */
-	private void parseOptions(Set<Option> options) {
+	private void parseOptions(Set<Option> options) throws InvalidProgramArgumentsException {
 		Map<String, Option> longNameOptions = options.stream()
 				.collect(Collectors.toMap(Option::longName, Function.identity()));
 
@@ -111,17 +115,17 @@ public class Arguments {
 
 	/**
 	 * @param option
+	 * @throws InvalidProgramArgumentsException
 	 * @since 0.1.0
 	 */
-	private void parseOptionValue(Option option) {
+	private void parseOptionValue(Option option) throws InvalidProgramArgumentsException {
 		args.poll();
 
 		if (option.hasValue()) {
 			if (!args.isEmpty()) {
 				optionValues.put(option, args.poll());
 			} else {
-				// TODO implement parseOptionValue
-				throw new UnsupportedOperationException("Method 'parseOptionValue' not implemented yet");
+				throw new InvalidProgramArgumentsException(option, "missing value");
 			}
 		} else {
 			optionValues.put(option, "true");

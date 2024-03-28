@@ -109,9 +109,11 @@ public abstract class Program {
 	/**
 	 * DOCME add JavaDoc for method init
 	 * 
+	 * @throws InvalidProgramArgumentsException
+	 * 
 	 * @since 0.1.0
 	 */
-	protected void init(String[] args) {
+	protected void init(String[] args) throws InvalidProgramArgumentsException {
 		initOptionsInternal();
 
 		arguments = new Arguments(args, options.options);

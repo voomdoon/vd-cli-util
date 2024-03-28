@@ -38,6 +38,7 @@ class ProgramRunUtil {
 		try {
 			run(programmClass, args);
 		} catch (Exception e) {
+			// TODO handle InvalidProgramArgumentsException
 			throw new ProgramRunException(e);
 		}
 	}

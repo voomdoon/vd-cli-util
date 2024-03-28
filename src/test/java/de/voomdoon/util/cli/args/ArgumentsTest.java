@@ -1,6 +1,7 @@
 package de.voomdoon.util.cli.args;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Set;
 import java.util.function.Consumer;
@@ -8,6 +9,7 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
+import de.voomdoon.util.cli.InvalidProgramArgumentsException;
 
 /**
  * DOCME add JavaDoc for
@@ -37,10 +39,27 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method testConstructor
+	 * 
 	 * @since 0.1.0
 	 */
 	@Test
-	void testGetOptionValue_longName() {
+	void testConstructor_error_InvalidProgramArgumentsException_missingValue() throws Exception {
+		logTestStart();
+
+		String[] args = new String[] { "--" + ANY_LONG_NAME };
+		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue().build());
+
+		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(InvalidProgramArgumentsException.class)
+				.hasMessageContaining(ANY_LONG_NAME).hasMessageContaining("value");
+	}
+
+	/**
+	 * @throws InvalidProgramArgumentsException
+	 * @since 0.1.0
+	 */
+	@Test
+	void testGetOptionValue_longName() throws InvalidProgramArgumentsException {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME, TEST_VALUE };
@@ -53,10 +72,11 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
+	 * @throws InvalidProgramArgumentsException
 	 * @since 0.1.0
 	 */
 	@Test
-	void testHasOption_false() {
+	void testHasOption_false() throws InvalidProgramArgumentsException {
 		logTestStart();
 
 		String[] args = new String[0];
@@ -69,10 +89,11 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
+	 * @throws InvalidProgramArgumentsException
 	 * @since 0.1.0
 	 */
 	@Test
-	void testHasOption_longName() {
+	void testHasOption_longName() throws InvalidProgramArgumentsException {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME };

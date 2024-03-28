@@ -59,10 +59,11 @@ class ProgramTest extends LoggingCheckingTestBase {
 	class GetOptionValueTest extends TestBase {
 
 		/**
+		 * @throws InvalidProgramArgumentsException
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_absent() {
+		void test_absent() throws InvalidProgramArgumentsException {
 			logTestStart();
 
 			NoOpTestProgram program = new TestProgramWithOption();
