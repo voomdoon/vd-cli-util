@@ -134,7 +134,7 @@ public abstract class Program {
 	 * @since 0.1.0
 	 */
 	protected String pollArg(String name) {
-		return arguments.poll(name);
+		return arguments.pollArg(name);
 	}
 
 	/**

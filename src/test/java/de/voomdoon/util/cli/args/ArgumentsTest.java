@@ -72,6 +72,23 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void testGetOptionValue_withOtherArgsLookLikeOption() throws Exception {
+		logTestStart();
+
+		String arg1 = "--" + ANY_LONG_NAME;
+		String[] args = new String[] { "--" + ANY_LONG_NAME, TEST_VALUE, "arg0", arg1, "arg2" };
+		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue().build());
+		Option option = options.iterator().next();
+
+		Arguments actual = new Arguments(args, options);
+
+		assertThat(actual.getOptionValue(option)).hasValue(TEST_VALUE);
+	}
+
+	/**
 	 * @throws InvalidProgramArgumentsException
 	 * @since 0.1.0
 	 */

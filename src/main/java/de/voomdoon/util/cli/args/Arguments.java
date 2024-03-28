@@ -74,7 +74,7 @@ public class Arguments {
 	 * @return
 	 * @since 0.1.0
 	 */
-	public String poll(String name) {
+	public String pollArg(String name) {
 		if (args.isEmpty()) {
 			throw new NoSuchElementException(name);
 		}
