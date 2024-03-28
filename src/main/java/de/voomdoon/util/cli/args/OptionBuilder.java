@@ -19,6 +19,11 @@ public class OptionBuilder {
 	/**
 	 * @since 0.1.0
 	 */
+	private boolean hasValue;
+
+	/**
+	 * @since 0.1.0
+	 */
 	private String longName;
 
 	/**
@@ -36,7 +41,7 @@ public class OptionBuilder {
 	 * @since 0.1.0
 	 */
 	public Option build() {
-		Option option = new Option(longName);
+		Option option = new Option(longName, hasValue);
 
 		callback.accept(option);
 
@@ -44,12 +49,22 @@ public class OptionBuilder {
 	}
 
 	/**
-	 * @param longName
-	 *            longName
-	 * @return
+	 * @return {@link OptionBuilder}
 	 * @since 0.1.0
 	 */
-	public OptionBuilder setLongName(String longName) {
+	public OptionBuilder hasValue() {
+		this.hasValue = true;
+
+		return this;
+	}
+
+	/**
+	 * @param longName
+	 *            longName
+	 * @return {@link OptionBuilder}
+	 * @since 0.1.0
+	 */
+	public OptionBuilder longName(String longName) {
 		this.longName = longName;
 
 		return this;

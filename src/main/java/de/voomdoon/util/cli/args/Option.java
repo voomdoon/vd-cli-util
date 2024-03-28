@@ -7,6 +7,6 @@ package de.voomdoon.util.cli.args;
  *
  * @since 0.1.0
  */
-public record Option(String longName) {
+public record Option(String longName, boolean hasValue) {
 
 }

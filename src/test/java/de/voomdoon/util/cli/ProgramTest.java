@@ -16,6 +16,7 @@ import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
 import de.voomdoon.util.cli.args.Option;
+import de.voomdoon.util.cli.test.NoOpTestProgram;
 
 /**
  * DOCME add JavaDoc for
@@ -25,24 +26,6 @@ import de.voomdoon.util.cli.args.Option;
  * @since 0.1.0
  */
 class ProgramTest extends LoggingCheckingTestBase {
-
-	/**
-	 * DOCME add JavaDoc for ProgramTest.RunTest
-	 *
-	 * @author André Schulz
-	 *
-	 * @since 0.1.0
-	 */
-	public static class NoOpTestProgram extends Program {
-
-		/**
-		 * @since 0.1.0
-		 */
-		@Override
-		protected void runProgram() throws Exception {
-			// nothing to do
-		}
-	}
 
 	/**
 	 * DOCME add JavaDoc for ProgramTest.RunTest
@@ -63,7 +46,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 		 */
 		@Override
 		protected void initOptions() {
-			option = addOption().setLongName("test-option").build();
+			option = addOption().longName("test-option").hasValue().build();
 		}
 	}
 

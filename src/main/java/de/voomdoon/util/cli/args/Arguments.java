@@ -54,6 +54,17 @@ public class Arguments {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method hasOption
+	 * 
+	 * @param option
+	 * @return
+	 * @since 0.1.0
+	 */
+	public boolean hasOption(Option option) {
+		return getOptionValue(option).isPresent();
+	}
+
+	/**
 	 * DOCME add JavaDoc for method poll
 	 * 
 	 * @param name
@@ -88,14 +99,32 @@ public class Arguments {
 				Option option = longNameOptions.get(arg.substring(2));
 
 				if (option != null) {
-					args.poll();
-					optionValues.put(option, args.poll());
+					parseOptionValue(option);
 				} else {
 					return;
 				}
 			} else {
 				return;
 			}
+		}
+	}
+
+	/**
+	 * @param option
+	 * @since 0.1.0
+	 */
+	private void parseOptionValue(Option option) {
+		args.poll();
+
+		if (option.hasValue()) {
+			if (!args.isEmpty()) {
+				optionValues.put(option, args.poll());
+			} else {
+				// TODO implement parseOptionValue
+				throw new UnsupportedOperationException("Method 'parseOptionValue' not implemented yet");
+			}
+		} else {
+			optionValues.put(option, "true");
 		}
 	}
 }
