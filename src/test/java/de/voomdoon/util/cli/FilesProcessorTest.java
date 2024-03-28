@@ -22,7 +22,9 @@ import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
  * @author André Schulz
  *
  * @since 0.1.0
+ * @deprecated
  */
+@Deprecated
 class FilesProcessorTest extends LoggingCheckingTestBase {
 
 	/**
