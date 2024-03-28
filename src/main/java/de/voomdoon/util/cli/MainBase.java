@@ -3,8 +3,7 @@ package de.voomdoon.util.cli;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
-
-import org.apache.commons.lang3.ArrayUtils;
+import java.util.NoSuchElementException;
 
 /**
  * DOCME add JavaDoc for
@@ -13,12 +12,7 @@ import org.apache.commons.lang3.ArrayUtils;
  *
  * @since 0.1.0
  */
-public abstract class MainBase {
-
-	/**
-	 * @since 0.1.0
-	 */
-	private String[] args;
+public abstract class MainBase extends Program {
 
 	/**
 	 * @since 0.1.0
@@ -32,8 +26,7 @@ public abstract class MainBase {
 	 * @param subMains
 	 * @since 0.1.0
 	 */
-	protected MainBase(String[] args, Map<String, Class<?>> subMains) {
-		this.args = args;
+	protected MainBase(Map<String, Class<?>> subMains) {
 		this.subMains = subMains;
 	}
 
@@ -46,29 +39,46 @@ public abstract class MainBase {
 	protected abstract String getName();
 
 	/**
+	 * @since DOCME add inception version number
+	 */
+	@Override
+	protected void initOptions() {
+		// nothing to do
+	}
+
+	/**
 	 * DOCME add JavaDoc for method run
 	 * 
 	 * @throws InvalidSubProgramException
 	 * 
 	 * @since 0.1.0
 	 */
-	protected void run() throws InvalidSubProgramException {
-		if (args.length == 0 || args[0].equals("--help")) {
+	@Override
+	protected void runProgram() throws InvalidSubProgramException {
+		String subMain;
+
+		try {
+			subMain = pollArg("sub-main");
+		} catch (NoSuchElementException e) {
+			System.err.println("Missing argument 'sub-main'!");
 			printHelp();
 			return;
 		}
 
-		Class<?> clazz = subMains.get(args[0]);
+		if ("--help".equals(subMain)) {
+			printHelp();
+			return;
+		}
+
+		Class<?> clazz = subMains.get(subMain);
 
 		if (clazz == null) {
-			throw new ProgramRunException("Failed to find sub-main for '" + args[0] + "!", getHelpString());
+			throw new ProgramRunException("Failed to find sub-main for '" + subMain + "!", getHelpString());
 		}
 
 		Method method = getMainMethod(clazz);
 
-		Object subArgs = ArrayUtils.remove(args, 0);
-
-		executeMainMethod(method, subArgs);
+		executeMainMethod(method, getArguments().getAllRemaining().toArray(new String[0]));
 	}
 
 	/**
@@ -78,9 +88,9 @@ public abstract class MainBase {
 	 * @param subArgs
 	 * @since 0.1.0
 	 */
-	private void executeMainMethod(Method method, Object subArgs) {
+	private void executeMainMethod(Method method, String[] subArgs) {
 		try {
-			method.invoke(null, subArgs);
+			method.invoke(null, (Object) subArgs);
 		} catch (IllegalAccessException e) {
 			throw new IllegalStateException("Error at 'invoke': " + e.getMessage(), e);
 		} catch (IllegalArgumentException e) {

@@ -41,12 +41,11 @@ class MainBaseTest {
 		public static class InvalidMainWithNonStaticMainMethod extends MainBase {
 
 			/**
-			 * @param args
 			 * @param subMains
 			 * @since 0.1.0
 			 */
-			protected InvalidMainWithNonStaticMainMethod(String[] args, Map<String, Class<?>> subMains) {
-				super(args, subMains);
+			protected InvalidMainWithNonStaticMainMethod(Map<String, Class<?>> subMains) {
+				super(subMains);
 			}
 
 			/**
@@ -77,12 +76,11 @@ class MainBaseTest {
 		public static class InvalidMainWithoutMainMethod extends MainBase {
 
 			/**
-			 * @param args
 			 * @param subMains
 			 * @since 0.1.0
 			 */
-			protected InvalidMainWithoutMainMethod(String[] args, Map<String, Class<?>> subMains) {
-				super(args, subMains);
+			protected InvalidMainWithoutMainMethod(Map<String, Class<?>> subMains) {
+				super(subMains);
 			}
 
 			/**
@@ -107,12 +105,11 @@ class MainBaseTest {
 			/**
 			 * DOCME add JavaDoc for constructor MyMain
 			 * 
-			 * @param args
 			 * @param subMains
 			 * @since 0.1.0
 			 */
-			TestMain(String[] args, Map<String, Class<?>> subMains) {
-				super(args, subMains);
+			TestMain(Map<String, Class<?>> subMains) {
+				super(subMains);
 			}
 
 			/**
@@ -202,7 +199,7 @@ class MainBaseTest {
 	}
 
 	/**
-	 * Test class for {@link MainBase#run()}.
+	 * Test class for {@link MainBase#runProgram()}.
 	 *
 	 * @author André Schulz
 	 *
@@ -219,7 +216,9 @@ class MainBaseTest {
 		void test() throws Exception {
 			logTestStart();
 
-			new TestMain(new String[] { "a", "test" }, Map.of("a", ValidProgram.class)).run();
+			TestMain main = new TestMain(Map.of("a", ValidProgram.class));
+			main.init(new String[] { "a", "test" });
+			main.runProgram();
 
 			assertThat(ValidProgram.ARGS).isEqualTo(new String[] { "test" });
 		}
@@ -231,7 +230,8 @@ class MainBaseTest {
 		void test_help_containsName() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(new String[] { "--help" }, Map.of());
+			TestMain main = new TestMain(Map.of());
+			main.init(new String[] { "--help" });
 
 			SystemOutput output = SystemOutput.run(() -> run(main));
 
@@ -245,7 +245,8 @@ class MainBaseTest {
 		void test_help_containsSubMainKeys() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(new String[] { "--help" }, Map.of("test-sub", Object.class));
+			TestMain main = new TestMain(Map.of("test-sub", Object.class));
+			main.init(new String[] { "--help" });
 
 			SystemOutput output = SystemOutput.run(() -> run(main));
 
@@ -260,10 +261,11 @@ class MainBaseTest {
 		void test_InvalidProgramException_mainMethodMissing() throws Exception {
 			logTestStart();
 
-			InvalidMainWithoutMainMethod main = new InvalidMainWithoutMainMethod(new String[] { "sub", "dummy-arg" },
+			InvalidMainWithoutMainMethod main = new InvalidMainWithoutMainMethod(
 					Map.of("sub", InvalidMainWithoutMainMethod.class));
+			main.init(new String[] { "sub", "dummy-arg" });
 
-			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.run()))
+			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.runProgram()))
 					.extracting(InvalidSubProgramException::getCause).isInstanceOf(NoSuchMethodException.class);
 		}
 
@@ -276,9 +278,10 @@ class MainBaseTest {
 			logTestStart();
 
 			InvalidMainWithNonStaticMainMethod main = new InvalidMainWithNonStaticMainMethod(
-					new String[] { "sub", "dummy-arg" }, Map.of("sub", InvalidMainWithNonStaticMainMethod.class));
+					Map.of("sub", InvalidMainWithNonStaticMainMethod.class));
+			main.init(new String[] { "sub", "dummy-arg" });
 
-			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.run()))
+			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.runProgram()))
 					.extracting(InvalidSubProgramException::getMessage).asString().contains("static");
 		}
 
@@ -290,10 +293,10 @@ class MainBaseTest {
 		void test_InvalidSubProgramException_mainMethodMissing() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(new String[] { "a", "test" },
-					Map.of("a", InvalidProgramWithoutMainMethod.class));
+			TestMain main = new TestMain(Map.of("a", InvalidProgramWithoutMainMethod.class));
+			main.init(new String[] { "a", "test" });
 
-			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.run()))
+			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.runProgram()))
 					.extracting(InvalidSubProgramException::getCause).isInstanceOf(NoSuchMethodException.class);
 		}
 
@@ -304,7 +307,8 @@ class MainBaseTest {
 		void test_noArgs_printsHelp() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(new String[] {}, Map.of());
+			TestMain main = new TestMain(Map.of());
+			main.init(new String[] {});
 
 			SystemOutput output = SystemOutput.run(() -> run(main));
 
@@ -318,10 +322,10 @@ class MainBaseTest {
 		void test_ProgramRunException_subMainNotMatching_exceptionHelpMessageContainsValidSubMains() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(new String[] { "something" },
-					Map.of("sub-a", Object.class, "sub-b", Object.class));
+			TestMain main = new TestMain(Map.of("sub-a", Object.class, "sub-b", Object.class));
+			main.init(new String[] { "something" });
 
-			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.run());
+			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.runProgram());
 
 			assertThat(actual).extracting(ProgramRunException::getHelpString).asString().contains("sub-a", "sub-b");
 		}
@@ -333,9 +337,10 @@ class MainBaseTest {
 		void test_ProgramRunException_subMainNotMatching_exceptionMessageContainsInvalidArgument() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(new String[] { "something" }, Map.of());
+			TestMain main = new TestMain(Map.of());
+			main.init(new String[] { "something" });
 
-			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.run());
+			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.runProgram());
 
 			assertThat(actual).extracting(Exception::getMessage).asString().contains("something");
 		}
@@ -347,7 +352,7 @@ class MainBaseTest {
 		 */
 		private void run(TestMain main) {
 			try {
-				main.run();
+				main.runProgram();
 			} catch (InvalidSubProgramException e) {
 				fail(e);
 			}

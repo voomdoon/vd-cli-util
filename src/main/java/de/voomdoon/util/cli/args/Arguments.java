@@ -3,6 +3,7 @@ package de.voomdoon.util.cli.args;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -43,6 +44,18 @@ public class Arguments {
 		this.args = new LinkedList<>(Arrays.asList(args));
 
 		parseOptions(options);
+	}
+
+	/**
+	 * DOCME add JavaDoc for method getAllRemaining
+	 * 
+	 * @since DOCME add inception version number
+	 */
+	public List<String> getAllRemaining() {
+		List<String> remaining = List.copyOf(args);
+		args.clear();
+
+		return remaining;
 	}
 
 	/**
