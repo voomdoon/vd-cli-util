@@ -1,7 +1,9 @@
 package de.voomdoon.util.cli;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -34,11 +36,18 @@ class ProgramTest extends LoggingCheckingTestBase {
 		/**
 		 * DOCME add JavaDoc for constructor TestProgram
 		 * 
-		 * @param args
 		 * @since 0.1.0
 		 */
-		protected TestProgram(String[] args) {
-			super(args);
+		protected TestProgram() {
+			super();
+		}
+
+		/**
+		 * @since DOCME add inception version number
+		 */
+		@Override
+		public String pollArg(String name) {
+			return super.pollArg(name);
 		}
 
 		/**
@@ -47,6 +56,44 @@ class ProgramTest extends LoggingCheckingTestBase {
 		@Override
 		protected void runProgram() throws Exception {
 			// nothing to do
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for ProgramTest
+	 *
+	 * @author André Schulz
+	 *
+	 * @since DOCME add inception version number
+	 */
+	@Nested
+	class PollArgTest extends TestBase {
+
+		/**
+		 * @since DOCME add inception version number
+		 */
+		@Test
+		void test_empty() throws Exception {
+			logTestStart();
+
+			TestProgram program = new TestProgram();
+			program.init(new String[0]);
+
+			assertThatThrownBy(() -> program.pollArg("test-name")).isInstanceOf(NoSuchElementException.class)
+					.hasMessageContaining("test-name");
+		}
+
+		/**
+		 * @since DOCME add inception version number
+		 */
+		@Test
+		void test_one() throws Exception {
+			logTestStart();
+
+			TestProgram program = new TestProgram();
+			program.init(new String[] { "arg0" });
+
+			assertThat(program.pollArg("name0")).isEqualTo("arg0");
 		}
 	}
 
@@ -87,11 +134,6 @@ class ProgramTest extends LoggingCheckingTestBase {
 			/**
 			 * @since 0.1.0
 			 */
-			private Optional<String[]> constructorArgs = Optional.empty();
-
-			/**
-			 * @since 0.1.0
-			 */
 			private final AtomicInteger runProgramCallCount = new AtomicInteger();
 
 			/**
@@ -100,10 +142,8 @@ class ProgramTest extends LoggingCheckingTestBase {
 			 * @param args
 			 * @since 0.1.0
 			 */
-			public TestProgram(String[] args) {
-				super(args);
-
-				constructorArgs = Optional.of(args);
+			public TestProgram() {
+				super();
 
 				INSTANCE = Optional.of(this);
 			}
@@ -115,22 +155,6 @@ class ProgramTest extends LoggingCheckingTestBase {
 			protected void runProgram() throws Exception {
 				runProgramCallCount.incrementAndGet();
 			}
-		}
-
-		/**
-		 * DOCME add JavaDoc for method test
-		 * 
-		 * @throws Exception
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_constructor_args() throws Exception {
-			logTestStart();
-
-			TestProgram.run(new String[] { "test" });
-
-			assertThat(TestProgram.INSTANCE).isPresent();
-			assertThat(TestProgram.INSTANCE.get().constructorArgs.get()).contains("test");
 		}
 
 		/**
@@ -159,7 +183,8 @@ class ProgramTest extends LoggingCheckingTestBase {
 	void testName() throws Exception {
 		logTestStart();
 
-		TestProgram program = new TestProgram(new String[0]);
+		TestProgram program = new TestProgram();
+		program.init(new String[0]);
 		program.logger.debug("test");
 
 		assertThat(getLogCache().getLogEvents(LogLevel.DEBUG)).hasSize(1);
