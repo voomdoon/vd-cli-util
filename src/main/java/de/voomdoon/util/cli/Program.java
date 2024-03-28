@@ -1,12 +1,15 @@
 package de.voomdoon.util.cli;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
 
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
+import de.voomdoon.util.cli.args.Arguments;
+import de.voomdoon.util.cli.args.Option;
+import de.voomdoon.util.cli.args.OptionBuilder;
 
 /**
  * DOCME add JavaDoc for
@@ -16,6 +19,27 @@ import de.voomdoon.logging.Logger;
  * @since 0.1.0
  */
 public abstract class Program {
+
+	/**
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	private class Options implements Consumer<Option> {
+
+		/**
+		 * @since 0.1.0
+		 */
+		private Set<Option> options = new HashSet<>();
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Override
+		public void accept(Option option) {
+			options.add(option);
+		}
+	}
 
 	/**
 	 * DOCME add JavaDoc for method run
@@ -36,7 +60,12 @@ public abstract class Program {
 	/**
 	 * @since 0.1.0
 	 */
-	private Queue<String> args;
+	private Arguments arguments;
+
+	/**
+	 * @since 0.1.0
+	 */
+	private Options options;
 
 	/**
 	 * DOCME add JavaDoc for constructor Program
@@ -49,12 +78,50 @@ public abstract class Program {
 	}
 
 	/**
+	 * @return arguments
+	 * @since 0.1.0
+	 */
+	public Arguments getArguments() {
+		return arguments;
+	}
+
+	/**
+	 * DOCME add JavaDoc for method addOption
+	 * 
+	 * @return
+	 * @since 0.1.0
+	 */
+	protected OptionBuilder addOption() {
+		return new OptionBuilder(options);
+	}
+
+	/**
+	 * DOCME add JavaDoc for method getOptionValue
+	 * 
+	 * @param option
+	 * @return
+	 * @since 0.1.0
+	 */
+	protected Optional<String> getOptionValue(Option option) {
+		return arguments.getOptionValue(option);
+	}
+
+	/**
 	 * DOCME add JavaDoc for method init
 	 * 
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	protected void init(String[] args) {
-		this.args = new LinkedList<>(Arrays.asList(args));
+		initOptionsInternal();
+
+		arguments = new Arguments(args, options.options);
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	protected void initOptions() {
+		logger.trace("initOptions not overwritten");
 	}
 
 	/**
@@ -62,14 +129,10 @@ public abstract class Program {
 	 * 
 	 * @param name
 	 * @return
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	protected String pollArg(String name) {
-		if (args.isEmpty()) {
-			throw new NoSuchElementException(name);
-		}
-
-		return args.poll();
+		return arguments.poll(name);
 	}
 
 	/**
@@ -79,4 +142,14 @@ public abstract class Program {
 	 * @since 0.1.0
 	 */
 	protected abstract void runProgram() throws Exception;
+
+	/**
+	 * DOCME add JavaDoc for method initOptionsInternal
+	 * 
+	 * @since 0.1.0
+	 */
+	private void initOptionsInternal() {
+		options = new Options();
+		initOptions();
+	}
 }
