@@ -143,8 +143,8 @@ class MainBaseTest {
 			 * @param args
 			 * @since 0.1.0
 			 */
-			protected InvalidProgramWithoutMainMethod(String[] args) {
-				super(args);
+			protected InvalidProgramWithoutMainMethod() {
+				super();
 			}
 
 			/**
@@ -152,7 +152,6 @@ class MainBaseTest {
 			 */
 			@Override
 			protected void runProgram() throws Exception {
-				// TODO implement runProgram
 				throw new UnsupportedOperationException("'runProgram' not implemented at 'Program'!");
 			}
 		}
@@ -188,9 +187,8 @@ class MainBaseTest {
 			 * @param args
 			 * @since 0.1.0
 			 */
-			protected ValidProgram(String[] args) {
-				super(args);
-				// TODO Auto-generated constructor stub
+			protected ValidProgram() {
+				super();
 			}
 
 			/**
@@ -198,11 +196,9 @@ class MainBaseTest {
 			 */
 			@Override
 			protected void runProgram() throws Exception {
-				// TODO implement runProgram
 				throw new UnsupportedOperationException("'runProgram' not implemented at 'Program'!");
 			}
 		}
-
 	}
 
 	/**
