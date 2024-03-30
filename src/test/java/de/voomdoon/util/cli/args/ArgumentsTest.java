@@ -3,6 +3,7 @@ package de.voomdoon.util.cli.args;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -39,8 +40,6 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method testConstructor
-	 * 
 	 * @since 0.1.0
 	 */
 	@Test
@@ -55,7 +54,23 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
-	 * @throws InvalidProgramArgumentsException
+	 * @since 0.1.0
+	 */
+	@Test
+	void testGetAllRemaining_consumesAll() throws Exception {
+		logTestStart();
+
+		String[] args = new String[] { "arg0" };
+		Arguments arguments = new Arguments(args, Set.of());
+
+		arguments.getAllRemaining();
+
+		List<String> actuals = arguments.getAllRemaining();
+
+		assertThat(actuals).isEmpty();
+	}
+
+	/**
 	 * @since 0.1.0
 	 */
 	@Test
@@ -89,7 +104,6 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
-	 * @throws InvalidProgramArgumentsException
 	 * @since 0.1.0
 	 */
 	@Test
@@ -106,7 +120,6 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	}
 
 	/**
-	 * @throws InvalidProgramArgumentsException
 	 * @since 0.1.0
 	 */
 	@Test
