@@ -78,7 +78,7 @@ public abstract class MainBase extends Program {
 
 		Method method = getMainMethod(clazz);
 
-		executeMainMethod(method, getArguments().getAllRemaining().toArray(new String[0]));
+		executeMainMethod(method, getArguments().pollAllArgs().toArray(new String[0]));
 	}
 
 	/**

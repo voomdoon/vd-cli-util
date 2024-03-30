@@ -51,7 +51,7 @@ public class Arguments {
 	 * 
 	 * @since DOCME add inception version number
 	 */
-	public List<String> getAllRemaining() {
+	public List<String> pollAllArgs() {
 		List<String> remaining = List.copyOf(args);
 		args.clear();
 

@@ -57,23 +57,6 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 * @since 0.1.0
 	 */
 	@Test
-	void testGetAllRemaining_consumesAll() throws Exception {
-		logTestStart();
-
-		String[] args = new String[] { "arg0" };
-		Arguments arguments = new Arguments(args, Set.of());
-
-		arguments.getAllRemaining();
-
-		List<String> actuals = arguments.getAllRemaining();
-
-		assertThat(actuals).isEmpty();
-	}
-
-	/**
-	 * @since 0.1.0
-	 */
-	@Test
 	void testGetOptionValue_longName() throws InvalidProgramArgumentsException {
 		logTestStart();
 
@@ -133,5 +116,22 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 		Arguments actual = new Arguments(args, options);
 
 		assertThat(actual.hasOption(option)).isTrue();
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void testPollAllArgs_consumesAll_callTwiceIsEmpty() throws Exception {
+		logTestStart();
+
+		String[] args = new String[] { "arg0" };
+		Arguments arguments = new Arguments(args, Set.of());
+
+		arguments.pollAllArgs();
+
+		List<String> actuals = arguments.pollAllArgs();
+
+		assertThat(actuals).isEmpty();
 	}
 }
