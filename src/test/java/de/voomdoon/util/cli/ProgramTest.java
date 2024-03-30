@@ -144,14 +144,14 @@ class ProgramTest extends LoggingCheckingTestBase {
 	}
 
 	/**
-	 * DOCME add JavaDoc for ProgramTest
+	 * Test class for {@link Program#run(String[])}.
 	 *
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0
 	 */
 	@Nested
-	class RunTest extends TestBase {
+	class Run_StringArray_Test extends TestBase {
 
 		/**
 		 * DOCME add JavaDoc for ProgramTest.RunTest
