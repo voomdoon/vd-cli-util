@@ -1,6 +1,4 @@
-package de.voomdoon.util.cli;
-
-import de.voomdoon.util.cli.args.Option;
+package de.voomdoon.util.cli.args;
 
 /**
  * DOCME add JavaDoc for

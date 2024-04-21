@@ -5,13 +5,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import de.voomdoon.util.cli.InvalidProgramArgumentsException;
 
 /**
  * DOCME add JavaDoc for
@@ -47,18 +44,6 @@ public class Arguments {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getAllRemaining
-	 * 
-	 * @since 0.1.0
-	 */
-	public List<String> pollAllArgs() {
-		List<String> remaining = List.copyOf(args);
-		args.clear();
-
-		return remaining;
-	}
-
-	/**
 	 * DOCME add JavaDoc for method getOptionValue
 	 * 
 	 * @param option
@@ -81,15 +66,28 @@ public class Arguments {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method getAllRemaining
+	 * 
+	 * @since 0.1.0
+	 */
+	public List<String> pollAllArgs() {
+		List<String> remaining = List.copyOf(args);
+		args.clear();
+
+		return remaining;
+	}
+
+	/**
 	 * DOCME add JavaDoc for method poll
 	 * 
 	 * @param name
 	 * @return
+	 * @throws MissingMandatoryArgumentException
 	 * @since 0.1.0
 	 */
-	public String pollArg(String name) {
+	public String pollArg(String name) throws MissingMandatoryArgumentException {
 		if (args.isEmpty()) {
-			throw new NoSuchElementException(name);
+			throw new MissingMandatoryArgumentException(name);
 		}
 
 		return args.poll();

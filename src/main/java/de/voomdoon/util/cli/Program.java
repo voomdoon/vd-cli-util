@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
 import de.voomdoon.util.cli.args.Arguments;
+import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
+import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 import de.voomdoon.util.cli.args.Option;
 import de.voomdoon.util.cli.args.OptionBuilder;
 
@@ -229,9 +231,10 @@ public abstract class Program {
 	 * 
 	 * @param name
 	 * @return
+	 * @throws MissingMandatoryArgumentException
 	 * @since 0.1.0
 	 */
-	protected String pollArg(String name) {
+	protected String pollArg(String name) throws MissingMandatoryArgumentException {
 		return arguments.pollArg(name);
 	}
 

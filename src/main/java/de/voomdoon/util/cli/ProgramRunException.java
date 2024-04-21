@@ -1,5 +1,7 @@
 package de.voomdoon.util.cli;
 
+import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
+
 /**
  * DOCME add JavaDoc for
  *
@@ -18,6 +20,19 @@ public class ProgramRunException extends RuntimeException {
 	 * @since 0.1.0
 	 */
 	private final String helpString;
+
+	/**
+	 * DOCME add JavaDoc for constructor ProgramRunException
+	 * 
+	 * @param message
+	 * @param cause
+	 * @since 0.1.0
+	 */
+	public ProgramRunException(String message, InvalidProgramArgumentsException cause) {
+		super(message, cause);
+
+		this.helpString = null;
+	}
 
 	/**
 	 * DOCME add JavaDoc for constructor ProgramRunException

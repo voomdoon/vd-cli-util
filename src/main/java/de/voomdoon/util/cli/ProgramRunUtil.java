@@ -2,6 +2,7 @@ package de.voomdoon.util.cli;
 
 import java.lang.reflect.Constructor;
 
+import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -22,15 +23,26 @@ class ProgramRunUtil {
 	 * @since 0.1.0
 	 */
 	static void run(Class<? extends Program> clazz, String[] args) {
+		Program program;
+
 		try {
 			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor();
-			constructor.setAccessible(true);
-			Program program = constructor.newInstance();
-			program.init(args);
-			program.runProgram();
+			program = constructor.newInstance();
 		} catch (Exception e) {
 			// TODO implement error handling
-			throw new RuntimeException("Error at 'run': " + e.getMessage(), e);
+			throw new RuntimeException("Failed to instantiate " + clazz.getName() + ": " + e.getMessage(), e);
+		}
+
+		try {
+			program.init(args);
+		} catch (InvalidProgramArgumentsException e) {
+			throw new ProgramRunException("Failed to initialize Program " + clazz.getName() + ": " + e.getMessage(), e);
+		}
+
+		try {
+			program.runProgram();
+		} catch (Exception e) {
+			throw new ProgramRunException(e);
 		}
 	}
 
@@ -48,18 +60,12 @@ class ProgramRunUtil {
 		try {
 			clazz = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			// TODO implement error handling
-			throw new RuntimeException("Error at 'run': " + e.getMessage(), e);
+			throw new RuntimeException("Failed to find Class '" + className + "': " + e.getMessage(), e);
 		}
 
 		@SuppressWarnings("unchecked")
 		Class<? extends Program> programmClass = (Class<? extends Program>) clazz;
 
-		try {
-			run(programmClass, args);
-		} catch (Exception e) {
-			// TODO handle InvalidProgramArgumentsException
-			throw new ProgramRunException(e);
-		}
+		run(programmClass, args);
 	}
 }

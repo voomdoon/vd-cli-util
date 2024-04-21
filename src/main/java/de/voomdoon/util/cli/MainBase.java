@@ -2,7 +2,9 @@ package de.voomdoon.util.cli;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
+
+import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
+import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 
 /**
  * DOCME add JavaDoc for
@@ -107,7 +109,7 @@ public abstract class MainBase extends Program {
 
 		try {
 			subMain = pollArg("sub-main");
-		} catch (NoSuchElementException e) {
+		} catch (MissingMandatoryArgumentException e) {
 			System.err.println("Missing argument 'sub-main'!");
 			printHelp();
 			return;

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.cli.MainBaseTest.TestMains.TestMain;
-import de.voomdoon.util.cli.MainBaseTest.TestMains.TestMainWithTwoSubPrograms;
+import de.voomdoon.util.cli.MainBaseTest.TestMainBases.TestMain;
+import de.voomdoon.util.cli.MainBaseTest.TestMainBases.TestMainWithTwoSubPrograms;
 import de.voomdoon.util.cli.MainBaseTest.TestPrograms.InvalidProgramWithoutMainMethod;
 import de.voomdoon.util.cli.MainBaseTest.TestPrograms.ValidProgram;
 import de.voomdoon.util.cli.ProgramTest.HelpTestBase;
@@ -30,7 +30,7 @@ class MainBaseTest {
 	 *
 	 * @since 0.1.0
 	 */
-	public static class TestMains {
+	public static class TestMainBases {
 
 		/**
 		 * @author André Schulz
@@ -44,7 +44,7 @@ class MainBaseTest {
 			 */
 			@Override
 			void registerSubMains() {
-				registerSubMain(SUB_NAME, InvalidProgramWithoutMainMethod.class);
+				registerSubMain(SUB_KEY, InvalidProgramWithoutMainMethod.class);
 			}
 		}
 
@@ -75,7 +75,7 @@ class MainBaseTest {
 			 */
 			@Override
 			void registerSubMains() {
-				registerSubMain(SUB_NAME, ValidProgram.class);
+				registerSubMain(SUB_KEY, ValidProgram.class);
 			}
 		}
 
@@ -201,7 +201,7 @@ class MainBaseTest {
 		void test_help_containsSubMainKeys() throws Exception {
 			logTestStart();
 
-			initRunAndAssert(TestMain.class).contains(SUB_NAME);
+			initRunAndAssert(TestMain.class).contains(SUB_KEY);
 		}
 	}
 
@@ -224,7 +224,7 @@ class MainBaseTest {
 			logTestStart();
 
 			MainBase main = new TestMain();
-			main.init(new String[] { SUB_NAME, "test-arg" });
+			main.init(new String[] { SUB_KEY, "test-arg" });
 			main.run();
 
 			assertThat(ValidProgram.ARGUMENTS).isEqualTo(List.of("test-arg"));
@@ -279,5 +279,5 @@ class MainBaseTest {
 	/**
 	 * @since 0.1.0
 	 */
-	private static final String SUB_NAME = "test-sub";
+	private static final String SUB_KEY = "test-sub";
 }

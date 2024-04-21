@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,8 +16,10 @@ import de.voomdoon.logging.LogLevel;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
-import de.voomdoon.util.cli.args.Option;
+import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
+import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 import de.voomdoon.util.cli.test.NoOpTestProgram;
+import de.voomdoon.util.cli.test.TestProgramWithOptionWithLongNameAndValue;
 import de.voomdoon.util.commons.SystemOutput;
 
 /**
@@ -29,39 +30,6 @@ import de.voomdoon.util.commons.SystemOutput;
  * @since 0.1.0
  */
 class ProgramTest extends LoggingCheckingTestBase {
-
-	/**
-	 * DOCME add JavaDoc for ProgramTest.RunTest
-	 *
-	 * @author André Schulz
-	 *
-	 * @since 0.1.0
-	 */
-	public static class TestProgramWithOptionWithLongNameAndValue extends NoOpTestProgram {
-
-		/**
-		 * @since 0.1.0
-		 */
-		private static final String TEST_OPTION = "test-option";
-
-		/**
-		 * @since 0.1.0
-		 */
-		private static final String TEST_OPTION_VALUE_NAME = "test-value-name";
-
-		/**
-		 * @since 0.1.0
-		 */
-		private Option option;
-
-		/**
-		 * @since 0.1.0
-		 */
-		@Override
-		protected void initOptions() {
-			option = addOption().longName(TEST_OPTION).hasValue(TEST_OPTION_VALUE_NAME).build();
-		}
-	}
 
 	/**
 	 * @author André Schulz
@@ -99,7 +67,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 			TestProgramWithOptionWithLongNameAndValue program = new TestProgramWithOptionWithLongNameAndValue();
 			program.init(new String[] { "--test-option", "test-value" });
 
-			Optional<String> actual = program.getOptionValue(program.option);
+			Optional<String> actual = program.getOptionValue(program.getOption());
 
 			assertThat(actual).hasValue("test-value");
 		}
@@ -237,7 +205,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 			NoOpTestProgram program = new NoOpTestProgram();
 			program.init(new String[0]);
 
-			assertThatThrownBy(() -> program.pollArg("test-name")).isInstanceOf(NoSuchElementException.class)
+			assertThatThrownBy(() -> program.pollArg("test-name")).isInstanceOf(MissingMandatoryArgumentException.class)
 					.hasMessageContaining("test-name");
 		}
 

@@ -10,7 +10,6 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.cli.InvalidProgramArgumentsException;
 
 /**
  * DOCME add JavaDoc for
