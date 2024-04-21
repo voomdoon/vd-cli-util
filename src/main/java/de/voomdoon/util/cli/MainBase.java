@@ -97,6 +97,13 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method registerSubMains
+	 * 
+	 * @since 0.1.0
+	 */
+	protected abstract void registerSubMains();
+
+	/**
 	 * DOCME add JavaDoc for method run
 	 * 
 	 * @throws InvalidSubProgramException
@@ -123,13 +130,6 @@ public abstract class MainBase extends Program {
 
 		ProgramRunUtil.run(clazz, getArguments().pollAllArgs().toArray(new String[0]));
 	}
-
-	/**
-	 * DOCME add JavaDoc for method registerSubMains
-	 * 
-	 * @since 0.1.0
-	 */
-	abstract void registerSubMains();
 
 	/**
 	 * DOCME add JavaDoc for method getHelpString

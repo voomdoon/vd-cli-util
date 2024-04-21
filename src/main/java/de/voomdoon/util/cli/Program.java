@@ -14,7 +14,7 @@ import de.voomdoon.util.cli.args.Option;
 import de.voomdoon.util.cli.args.OptionBuilder;
 
 /**
- * DOCME add JavaDoc for
+ * Base class for command line programs.
  *
  * @author André Schulz
  *
@@ -81,16 +81,15 @@ public abstract class Program {
 		@Override
 		public String getFull() {
 			StringBuilder sb = new StringBuilder();
+			// FEATURE add version
 			sb.append(getName());
 			appendOptions(sb);
-			// TODO add website
+			// FEATURE add other info (e.g. website)
 
 			return sb.toString();
 		}
 
 		/**
-		 * DOCME add JavaDoc for method appendOption
-		 * 
 		 * @param sb
 		 * @param option
 		 * @return
@@ -105,8 +104,6 @@ public abstract class Program {
 		}
 
 		/**
-		 * DOCME add JavaDoc for method appendOptions
-		 * 
 		 * @param sb
 		 * @since 0.1.0
 		 */
@@ -121,7 +118,7 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method run
+	 * Intended to be called by {@code main} method.
 	 * 
 	 * @param clazz
 	 * @param args

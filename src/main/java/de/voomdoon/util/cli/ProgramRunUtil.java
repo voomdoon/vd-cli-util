@@ -47,7 +47,7 @@ class ProgramRunUtil {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method run
+	 * Intended to be called by {@link Program#run(String[])} only.
 	 * 
 	 * @param args
 	 * @since 0.1.0

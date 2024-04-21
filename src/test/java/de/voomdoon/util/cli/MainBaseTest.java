@@ -43,7 +43,7 @@ class MainBaseTest {
 			 * @since 0.1.0
 			 */
 			@Override
-			void registerSubMains() {
+			protected void registerSubMains() {
 				registerSubMain(SUB_KEY, InvalidProgramWithoutMainMethod.class);
 			}
 		}
@@ -74,7 +74,7 @@ class MainBaseTest {
 			 * @since 0.1.0
 			 */
 			@Override
-			void registerSubMains() {
+			protected void registerSubMains() {
 				registerSubMain(SUB_KEY, ValidProgram.class);
 			}
 		}
@@ -100,7 +100,7 @@ class MainBaseTest {
 			 * @since 0.1.0
 			 */
 			@Override
-			void registerSubMains() {
+			protected void registerSubMains() {
 				registerSubMain("test-sub-a", ValidProgram.class);
 				registerSubMain("test-sub-b", ValidProgram.class);// TODO other
 			}
