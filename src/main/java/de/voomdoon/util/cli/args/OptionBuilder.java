@@ -19,12 +19,12 @@ public class OptionBuilder {
 	/**
 	 * @since 0.1.0
 	 */
-	private boolean hasValue;
+	private String longName;
 
 	/**
 	 * @since 0.1.0
 	 */
-	private String longName;
+	private String valueName;
 
 	/**
 	 * DOCME add JavaDoc for constructor OptionBuilder
@@ -41,7 +41,7 @@ public class OptionBuilder {
 	 * @since 0.1.0
 	 */
 	public Option build() {
-		Option option = new Option(longName, hasValue);
+		Option option = new Option(longName, valueName);
 
 		callback.accept(option);
 
@@ -49,11 +49,12 @@ public class OptionBuilder {
 	}
 
 	/**
+	 * @param valueName
 	 * @return {@link OptionBuilder}
 	 * @since 0.1.0
 	 */
-	public OptionBuilder hasValue() {
-		this.hasValue = true;
+	public OptionBuilder hasValue(String valueName) {
+		this.valueName = valueName;
 
 		return this;
 	}

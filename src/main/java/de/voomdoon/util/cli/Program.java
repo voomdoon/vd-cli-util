@@ -21,11 +21,72 @@ import de.voomdoon.util.cli.args.OptionBuilder;
 public abstract class Program {
 
 	/**
+	 * DOCME add JavaDoc for Program
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	private class HelpGenerator {
+
+		/**
+		 * DOCME add JavaDoc for method generate
+		 * 
+		 * @return
+		 * @since 0.1.0
+		 */
+		public String generate() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(getName());
+			appendOptions(sb);
+			// TODO add website
+
+			return sb.toString();
+		}
+
+		/**
+		 * DOCME add JavaDoc for method appendOption
+		 * 
+		 * @param sb
+		 * @param option
+		 * @return
+		 * @since 0.1.0
+		 */
+		private void appendOption(StringBuilder sb, Option option) {
+			sb.append("\n    ").append(option.longName());
+
+			if (option.hasValue()) {
+				sb.append(" <").append(option.valueName()).append(">");
+			}
+		}
+
+		/**
+		 * DOCME add JavaDoc for method appendOptions
+		 * 
+		 * @param sb
+		 * @since 0.1.0
+		 */
+		private void appendOptions(StringBuilder sb) {
+			if (!options.options.isEmpty()) {
+				sb.append("\noptions:");
+			}
+
+			options.options.stream().sorted((o1, o2) -> o1.longName().compareToIgnoreCase(o2.longName()))
+					.forEach(o -> appendOption(sb, o));
+		}
+	}
+
+	/**
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0
 	 */
 	private class Options implements Consumer<Option> {
+
+		/**
+		 * @since 0.1.0
+		 */
+		private Option help;
 
 		/**
 		 * @since 0.1.0
@@ -96,6 +157,16 @@ public abstract class Program {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method getName
+	 * 
+	 * @return
+	 * @since 0.1.0
+	 */
+	protected String getName() {
+		return getClass().getSimpleName();
+	}
+
+	/**
 	 * DOCME add JavaDoc for method getOptionValue
 	 * 
 	 * @param option
@@ -138,6 +209,20 @@ public abstract class Program {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method run
+	 * 
+	 * @throws Exception
+	 * @since 0.1.0
+	 */
+	protected void run() throws Exception {
+		if (arguments.hasOption(options.help)) {
+			System.out.println(new HelpGenerator().generate());
+		} else {
+			runProgram();
+		}
+	}
+
+	/**
 	 * DOCME add JavaDoc for method runProgram
 	 * 
 	 * @throws Exception
@@ -152,6 +237,7 @@ public abstract class Program {
 	 */
 	private void initOptionsInternal() {
 		options = new Options();
+		options.help = addOption().longName("help").build();
 		initOptions();
 	}
 }

@@ -29,6 +29,11 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	/**
 	 * @since 0.1.0
 	 */
+	private static final String ANY_VALUE_NAME = "test-value-name";
+
+	/**
+	 * @since 0.1.0
+	 */
 	private static final String TEST_VALUE = "test-value";
 
 	/**
@@ -47,7 +52,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME };
-		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue().build());
+		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue(ANY_VALUE_NAME).build());
 
 		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(InvalidProgramArgumentsException.class)
 				.hasMessageContaining(ANY_LONG_NAME).hasMessageContaining("value");
@@ -61,7 +66,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME, TEST_VALUE };
-		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue().build());
+		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue(ANY_VALUE_NAME).build());
 		Option option = options.iterator().next();
 
 		Arguments actual = new Arguments(args, options);
@@ -78,7 +83,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 
 		String arg1 = "--" + ANY_LONG_NAME;
 		String[] args = new String[] { "--" + ANY_LONG_NAME, TEST_VALUE, "arg0", arg1, "arg2" };
-		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue().build());
+		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue(ANY_VALUE_NAME).build());
 		Option option = options.iterator().next();
 
 		Arguments actual = new Arguments(args, options);

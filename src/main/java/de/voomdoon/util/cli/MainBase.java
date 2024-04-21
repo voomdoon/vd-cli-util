@@ -31,15 +31,7 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getName
-	 * 
-	 * @return
 	 * @since 0.1.0
-	 */
-	protected abstract String getName();
-
-	/**
-	 * @since DOCME add inception version number
 	 */
 	@Override
 	protected void initOptions() {

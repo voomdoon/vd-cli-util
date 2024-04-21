@@ -15,7 +15,7 @@ public class NoOpTestProgram extends Program {
 	 * @since 0.1.0
 	 */
 	@Override
-	protected void runProgram() throws Exception {
+	public void runProgram() throws Exception {
 		// nothing to do
 	}
 }
