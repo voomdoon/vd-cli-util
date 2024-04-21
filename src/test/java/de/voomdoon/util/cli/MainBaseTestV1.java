@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.cli.MainBaseTest.TestMains.InvalidMainWithNonStaticMainMethod;
-import de.voomdoon.util.cli.MainBaseTest.TestMains.InvalidMainWithoutMainMethod;
-import de.voomdoon.util.cli.MainBaseTest.TestMains.TestMain;
-import de.voomdoon.util.cli.MainBaseTest.TestPrograms.InvalidProgramWithoutMainMethod;
-import de.voomdoon.util.cli.MainBaseTest.TestPrograms.ValidProgram;
+import de.voomdoon.util.cli.MainBaseTestV1.TestMains.InvalidMainWithNonStaticMainMethod;
+import de.voomdoon.util.cli.MainBaseTestV1.TestMains.InvalidMainWithoutMainMethod;
+import de.voomdoon.util.cli.MainBaseTestV1.TestMains.TestMain;
+import de.voomdoon.util.cli.MainBaseTestV1.TestPrograms.InvalidProgramWithoutMainMethod;
+import de.voomdoon.util.cli.MainBaseTestV1.TestPrograms.ValidProgram;
 import de.voomdoon.util.commons.SystemOutput;
 
 /**
@@ -24,7 +24,7 @@ import de.voomdoon.util.commons.SystemOutput;
  *
  * @since 0.1.0
  */
-class MainBaseTest {
+class MainBaseTestV1 {
 
 	/**
 	 * @author André Schulz
@@ -195,6 +195,29 @@ class MainBaseTest {
 			protected void run() throws Exception {
 				throw new UnsupportedOperationException("'runProgram' not implemented at 'Program'!");
 			}
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for MainBaseTest
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	class HelpTest extends TestBase {
+
+		/**
+		 * DOCME add JavaDoc for method test
+		 * 
+		 * @since 0.1.0
+		 */
+		@Test
+		void test() throws Exception {
+			logTestStart();
+
+			// TODO implement test_runProgram_called
+			throw new UnsupportedOperationException("Method 'test' not implemented yet!");
 		}
 	}
 

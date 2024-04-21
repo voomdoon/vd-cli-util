@@ -56,7 +56,7 @@ class ProgramRunUtil {
 			constructor.setAccessible(true);
 			Program program = constructor.newInstance();
 			program.init(args);
-			program.run();
+			program.runProgram();
 		} catch (Exception e) {
 			// TODO implement error handling
 			throw new RuntimeException("Error at 'run': " + e.getMessage(), e);

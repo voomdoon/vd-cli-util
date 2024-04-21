@@ -214,11 +214,11 @@ public abstract class Program {
 	 * @throws Exception
 	 * @since 0.1.0
 	 */
-	protected void run() throws Exception {
+	protected void runProgram() throws Exception {
 		if (arguments.hasOption(options.help)) {
 			System.out.println(new HelpGenerator().generate());
 		} else {
-			runProgram();
+			run();
 		}
 	}
 
@@ -228,7 +228,7 @@ public abstract class Program {
 	 * @throws Exception
 	 * @since 0.1.0
 	 */
-	protected abstract void runProgram() throws Exception;
+	protected abstract void run() throws Exception;
 
 	/**
 	 * DOCME add JavaDoc for method initOptionsInternal

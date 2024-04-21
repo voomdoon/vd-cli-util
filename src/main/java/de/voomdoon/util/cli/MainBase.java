@@ -46,7 +46,7 @@ public abstract class MainBase extends Program {
 	 * @since 0.1.0
 	 */
 	@Override
-	protected void runProgram() throws InvalidSubProgramException {
+	protected void run() throws InvalidSubProgramException {
 		String subMain;
 
 		try {

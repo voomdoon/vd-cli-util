@@ -193,7 +193,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 		 * @since 0.1.0
 		 */
 		private AbstractStringAssert<?> runAndAssert(Program program) throws InvocationTargetException {
-			SystemOutput output = SystemOutput.run(() -> program.run());
+			SystemOutput output = SystemOutput.run(() -> program.runProgram());
 
 			output.log(logger);
 
@@ -307,7 +307,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 			 * @since 0.1.0
 			 */
 			@Override
-			protected void runProgram() throws Exception {
+			protected void run() throws Exception {
 				runProgramCallCount.incrementAndGet();
 			}
 		}
