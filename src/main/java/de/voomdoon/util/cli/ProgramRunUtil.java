@@ -17,6 +17,26 @@ class ProgramRunUtil {
 	/**
 	 * DOCME add JavaDoc for method run
 	 * 
+	 * @param clazz
+	 * @param args
+	 * @since 0.1.0
+	 */
+	static void run(Class<? extends Program> clazz, String[] args) {
+		try {
+			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor();
+			constructor.setAccessible(true);
+			Program program = constructor.newInstance();
+			program.init(args);
+			program.runProgram();
+		} catch (Exception e) {
+			// TODO implement error handling
+			throw new RuntimeException("Error at 'run': " + e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for method run
+	 * 
 	 * @param args
 	 * @since 0.1.0
 	 */
@@ -40,26 +60,6 @@ class ProgramRunUtil {
 		} catch (Exception e) {
 			// TODO handle InvalidProgramArgumentsException
 			throw new ProgramRunException(e);
-		}
-	}
-
-	/**
-	 * DOCME add JavaDoc for method run
-	 * 
-	 * @param clazz
-	 * @param args
-	 * @since 0.1.0
-	 */
-	private static void run(Class<? extends Program> clazz, String[] args) {
-		try {
-			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor();
-			constructor.setAccessible(true);
-			Program program = constructor.newInstance();
-			program.init(args);
-			program.runProgram();
-		} catch (Exception e) {
-			// TODO implement error handling
-			throw new RuntimeException("Error at 'run': " + e.getMessage(), e);
 		}
 	}
 }

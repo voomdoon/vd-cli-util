@@ -2,19 +2,18 @@ package de.voomdoon.util.cli;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.Map;
+import java.util.List;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.cli.MainBaseTest.TestMains.InvalidMainWithNonStaticMainMethod;
-import de.voomdoon.util.cli.MainBaseTest.TestMains.InvalidMainWithoutMainMethod;
 import de.voomdoon.util.cli.MainBaseTest.TestMains.TestMain;
+import de.voomdoon.util.cli.MainBaseTest.TestMains.TestMainWithTwoSubPrograms;
 import de.voomdoon.util.cli.MainBaseTest.TestPrograms.InvalidProgramWithoutMainMethod;
 import de.voomdoon.util.cli.MainBaseTest.TestPrograms.ValidProgram;
+import de.voomdoon.util.cli.ProgramTest.HelpTestBase;
 import de.voomdoon.util.commons.SystemOutput;
 
 /**
@@ -38,58 +37,14 @@ class MainBaseTest {
 		 *
 		 * @since 0.1.0
 		 */
-		public static class InvalidMainWithNonStaticMainMethod extends MainBase {
-
-			/**
-			 * @param subMains
-			 * @since 0.1.0
-			 */
-			protected InvalidMainWithNonStaticMainMethod(Map<String, Class<?>> subMains) {
-				super(subMains);
-			}
-
-			/**
-			 * @param args
-			 * @since 0.1.0
-			 */
-			public void main(String[] args) {
-				// nothing to do
-			}
+		public static class InvalidMainWithSubProgramWithoutMainMethod extends MainBase {
 
 			/**
 			 * @since 0.1.0
 			 */
 			@Override
-			protected String getName() {
-				// TODO implement getName
-				throw new UnsupportedOperationException("'getName' not implemented at 'MainBase'!");
-			}
-		}
-
-		/**
-		 * DOCME add JavaDoc for MainBaseTest.RunTest
-		 *
-		 * @author André Schulz
-		 *
-		 * @since 0.1.0
-		 */
-		public static class InvalidMainWithoutMainMethod extends MainBase {
-
-			/**
-			 * @param subMains
-			 * @since 0.1.0
-			 */
-			protected InvalidMainWithoutMainMethod(Map<String, Class<?>> subMains) {
-				super(subMains);
-			}
-
-			/**
-			 * @since 0.1.0
-			 */
-			@Override
-			protected String getName() {
-				// TODO implement getName
-				throw new UnsupportedOperationException("'getName' not implemented at 'MainBase'!");
+			void registerSubMains() {
+				registerSubMain(SUB_NAME, InvalidProgramWithoutMainMethod.class);
 			}
 		}
 
@@ -103,14 +58,35 @@ class MainBaseTest {
 		public static class TestMain extends MainBase {
 
 			/**
-			 * DOCME add JavaDoc for constructor MyMain
-			 * 
-			 * @param subMains
 			 * @since 0.1.0
 			 */
-			TestMain(Map<String, Class<?>> subMains) {
-				super(subMains);
+			private static final String NAME = "My-Main";
+
+			/**
+			 * @since 0.1.0
+			 */
+			@Override
+			protected String getName() {
+				return NAME;
 			}
+
+			/**
+			 * @since 0.1.0
+			 */
+			@Override
+			void registerSubMains() {
+				registerSubMain(SUB_NAME, ValidProgram.class);
+			}
+		}
+
+		/**
+		 * DOCME add JavaDoc for MainBaseTest.RunTest
+		 *
+		 * @author André Schulz
+		 *
+		 * @since 0.1.0
+		 */
+		public static class TestMainWithTwoSubPrograms extends MainBase {
 
 			/**
 			 * @since 0.1.0
@@ -118,6 +94,15 @@ class MainBaseTest {
 			@Override
 			protected String getName() {
 				return "My-Main";
+			}
+
+			/**
+			 * @since 0.1.0
+			 */
+			@Override
+			void registerSubMains() {
+				registerSubMain("test-sub-a", ValidProgram.class);
+				registerSubMain("test-sub-b", ValidProgram.class);// TODO other
 			}
 		}
 	}
@@ -135,6 +120,8 @@ class MainBaseTest {
 		 * @since 0.1.0
 		 */
 		public static class InvalidProgramWithoutMainMethod extends Program {
+
+			// XXX to sub-programs really need main method?
 
 			/**
 			 * @param args
@@ -165,18 +152,7 @@ class MainBaseTest {
 			/**
 			 * @since 0.1.0
 			 */
-			private static String[] ARGS;
-
-			/**
-			 * DOCME add JavaDoc for method main
-			 * 
-			 * @param args
-			 * @since 0.1.0
-			 */
-			@SuppressWarnings("unused")
-			public static void main(String[] args) {
-				ARGS = args;
-			}
+			private static List<String> ARGUMENTS;
 
 			/**
 			 * DOCME add JavaDoc for constructor SubMainA
@@ -193,8 +169,39 @@ class MainBaseTest {
 			 */
 			@Override
 			protected void run() throws Exception {
-				throw new UnsupportedOperationException("'runProgram' not implemented at 'Program'!");
+				ARGUMENTS = getArguments().pollAllArgs();
 			}
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for MainBaseTest
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	@Nested
+	class HelpTest extends HelpTestBase {
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_help_containsName() throws Exception {
+			logTestStart();
+
+			initRunAndAssert(TestMain.class).contains(TestMain.NAME);
+		}
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_help_containsSubMainKeys() throws Exception {
+			logTestStart();
+
+			initRunAndAssert(TestMain.class).contains(SUB_NAME);
 		}
 	}
 
@@ -216,88 +223,11 @@ class MainBaseTest {
 		void test() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(Map.of("a", ValidProgram.class));
-			main.init(new String[] { "a", "test" });
+			MainBase main = new TestMain();
+			main.init(new String[] { SUB_NAME, "test-arg" });
 			main.run();
 
-			assertThat(ValidProgram.ARGS).isEqualTo(new String[] { "test" });
-		}
-
-		/**
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_help_containsName() throws Exception {
-			logTestStart();
-
-			TestMain main = new TestMain(Map.of());
-			main.init(new String[] { "--help" });
-
-			SystemOutput output = SystemOutput.run(() -> run(main));
-
-			assertThat(output).extracting(SystemOutput::getOut).asString().contains("My-Main");
-		}
-
-		/**
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_help_containsSubMainKeys() throws Exception {
-			logTestStart();
-
-			TestMain main = new TestMain(Map.of("test-sub", Object.class));
-			main.init(new String[] { "--help" });
-
-			SystemOutput output = SystemOutput.run(() -> run(main));
-
-			assertThat(output).extracting(SystemOutput::getOut).asString().contains("test-sub");
-		}
-
-		/**
-		 * @throws Exception
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_InvalidProgramException_mainMethodMissing() throws Exception {
-			logTestStart();
-
-			InvalidMainWithoutMainMethod main = new InvalidMainWithoutMainMethod(
-					Map.of("sub", InvalidMainWithoutMainMethod.class));
-			main.init(new String[] { "sub", "dummy-arg" });
-
-			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.run()))
-					.extracting(InvalidSubProgramException::getCause).isInstanceOf(NoSuchMethodException.class);
-		}
-
-		/**
-		 * @throws Exception
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_InvalidProgramException_mainMethodNotStatic() throws Exception {
-			logTestStart();
-
-			InvalidMainWithNonStaticMainMethod main = new InvalidMainWithNonStaticMainMethod(
-					Map.of("sub", InvalidMainWithNonStaticMainMethod.class));
-			main.init(new String[] { "sub", "dummy-arg" });
-
-			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.run()))
-					.extracting(InvalidSubProgramException::getMessage).asString().contains("static");
-		}
-
-		/**
-		 * @throws Exception
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_InvalidSubProgramException_mainMethodMissing() throws Exception {
-			logTestStart();
-
-			TestMain main = new TestMain(Map.of("a", InvalidProgramWithoutMainMethod.class));
-			main.init(new String[] { "a", "test" });
-
-			assertThat(assertThrows(InvalidSubProgramException.class, () -> main.run()))
-					.extracting(InvalidSubProgramException::getCause).isInstanceOf(NoSuchMethodException.class);
+			assertThat(ValidProgram.ARGUMENTS).isEqualTo(List.of("test-arg"));
 		}
 
 		/**
@@ -307,10 +237,10 @@ class MainBaseTest {
 		void test_noArgs_printsHelp() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(Map.of());
-			main.init(new String[] {});
+			MainBase main = new TestMain();
+			main.init(new String[0]);
 
-			SystemOutput output = SystemOutput.run(() -> run(main));
+			SystemOutput output = SystemOutput.run(() -> main.runProgram());
 
 			assertThat(output).extracting(SystemOutput::getOut).asString().contains("My-Main");
 		}
@@ -322,10 +252,10 @@ class MainBaseTest {
 		void test_ProgramRunException_subMainNotMatching_exceptionHelpMessageContainsValidSubMains() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(Map.of("sub-a", Object.class, "sub-b", Object.class));
+			MainBase main = new TestMainWithTwoSubPrograms();
 			main.init(new String[] { "something" });
 
-			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.run());
+			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.runProgram());
 
 			assertThat(actual).extracting(ProgramRunException::getHelpString).asString().contains("sub-a", "sub-b");
 		}
@@ -337,25 +267,17 @@ class MainBaseTest {
 		void test_ProgramRunException_subMainNotMatching_exceptionMessageContainsInvalidArgument() throws Exception {
 			logTestStart();
 
-			TestMain main = new TestMain(Map.of());
+			MainBase main = new TestMain();
 			main.init(new String[] { "something" });
 
-			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.run());
+			ProgramRunException actual = assertThrows(ProgramRunException.class, () -> main.runProgram());
 
 			assertThat(actual).extracting(Exception::getMessage).asString().contains("something");
 		}
-
-		/**
-		 * @param main
-		 * @return
-		 * @since 0.1.0
-		 */
-		private void run(TestMain main) {
-			try {
-				main.run();
-			} catch (InvalidSubProgramException e) {
-				fail(e);
-			}
-		}
 	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	private static final String SUB_NAME = "test-sub";
 }

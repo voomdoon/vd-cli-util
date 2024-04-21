@@ -1,7 +1,6 @@
 package de.voomdoon.util.cli;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -17,17 +16,63 @@ public abstract class MainBase extends Program {
 	/**
 	 * @since 0.1.0
 	 */
-	private Map<String, Class<?>> subMains;
+	private class MainBaseHelpSupplier implements HelpGenerator {
+
+		/**
+		 * @since 0.1.0
+		 */
+		private HelpGenerator parent;
+
+		/**
+		 * DOCME add JavaDoc for constructor HelpSupplier
+		 * 
+		 * @param parent
+		 * @since 0.1.0
+		 */
+		public MainBaseHelpSupplier(HelpGenerator parent) {
+			this.parent = parent;
+		}
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Override
+		public String getFull() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(parent.getFull());
+			// TODO improve order (add footer)
+
+			sb.append("\n\nsub-mains:");
+
+			subMains.entrySet().stream().sorted((e1, e2) -> e1.getKey().compareTo(e2.getKey())).forEach(entry -> {
+				sb.append("\n    • ").append(entry.getKey());// TODO other info
+			});
+
+			return sb.toString();
+		}
+	}
 
 	/**
-	 * DOCME add JavaDoc for constructor MainBase
-	 * 
-	 * @param args
-	 * @param subMains
 	 * @since 0.1.0
 	 */
-	protected MainBase(Map<String, Class<?>> subMains) {
-		this.subMains = subMains;
+	private Map<String, Class<? extends Program>> subMains;
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Override
+	protected HelpGenerator getHelpGenerator() {
+		return new MainBaseHelpSupplier(super.getHelpGenerator());
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Override
+	protected void init(String[] args) throws InvalidProgramArgumentsException {
+		super.init(args);
+
+		initSubMains();
 	}
 
 	/**
@@ -39,6 +84,17 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method registerSubMain
+	 * 
+	 * @param key
+	 * @param clazz
+	 * @since 0.1.0
+	 */
+	protected void registerSubMain(String key, Class<? extends Program> clazz) {
+		subMains.put(key, clazz);
+	}
+
+	/**
 	 * DOCME add JavaDoc for method run
 	 * 
 	 * @throws InvalidSubProgramException
@@ -46,7 +102,7 @@ public abstract class MainBase extends Program {
 	 * @since 0.1.0
 	 */
 	@Override
-	protected void run() throws InvalidSubProgramException {
+	protected void run() {
 		String subMain;
 
 		try {
@@ -57,41 +113,21 @@ public abstract class MainBase extends Program {
 			return;
 		}
 
-		if ("--help".equals(subMain)) {
-			printHelp();
-			return;
-		}
-
-		Class<?> clazz = subMains.get(subMain);
+		Class<? extends Program> clazz = subMains.get(subMain);
 
 		if (clazz == null) {
 			throw new ProgramRunException("Failed to find sub-main for '" + subMain + "!", getHelpString());
 		}
 
-		Method method = getMainMethod(clazz);
-
-		executeMainMethod(method, getArguments().pollAllArgs().toArray(new String[0]));
+		ProgramRunUtil.run(clazz, getArguments().pollAllArgs().toArray(new String[0]));
 	}
 
 	/**
-	 * DOCME add JavaDoc for method executeMainMethod
+	 * DOCME add JavaDoc for method registerSubMains
 	 * 
-	 * @param method
-	 * @param subArgs
 	 * @since 0.1.0
 	 */
-	private void executeMainMethod(Method method, String[] subArgs) {
-		try {
-			method.invoke(null, (Object) subArgs);
-		} catch (IllegalAccessException e) {
-			throw new IllegalStateException("Error at 'invoke': " + e.getMessage(), e);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalStateException("Error at 'invoke': " + e.getMessage(), e);
-		} catch (InvocationTargetException e) {
-			// TODO implement error handling ProgramRunException
-			throw new IllegalStateException("Error at 'invoke': " + e.getMessage(), e);
-		}
-	}
+	abstract void registerSubMains();
 
 	/**
 	 * DOCME add JavaDoc for method getHelpString
@@ -110,31 +146,14 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getMainMethod
+	 * DOCME add JavaDoc for method initSubMains
 	 * 
-	 * @param clazz
-	 * @return
-	 * @throws InvalidSubProgramException
 	 * @since 0.1.0
 	 */
-	private Method getMainMethod(Class<?> clazz) throws InvalidSubProgramException {
-		Method method;
-
-		try {
-			method = clazz.getMethod("main", String[].class);
-		} catch (NoSuchMethodException e) {
-			throw new InvalidSubProgramException(e);
-		} catch (SecurityException e) {
-			throw new IllegalStateException("Error at 'getMethod': " + e.getMessage(), e);
-		}
-
-		boolean isStatic = (method.getModifiers() & java.lang.reflect.Modifier.STATIC) != 0;
-
-		if (!isStatic) {
-			throw new InvalidSubProgramException("Method 'main' must be static!");
-		}
-
-		return method;
+	private void initSubMains() {
+		subMains = new HashMap<>();
+		registerSubMains();
+		subMains = Map.copyOf(subMains);
 	}
 
 	/**

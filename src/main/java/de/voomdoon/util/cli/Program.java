@@ -27,53 +27,15 @@ public abstract class Program {
 	 *
 	 * @since 0.1.0
 	 */
-	private class HelpGenerator {
+	interface HelpGenerator {
 
 		/**
-		 * DOCME add JavaDoc for method generate
+		 * DOCME add JavaDoc for method getFull
 		 * 
 		 * @return
 		 * @since 0.1.0
 		 */
-		public String generate() {
-			StringBuilder sb = new StringBuilder();
-			sb.append(getName());
-			appendOptions(sb);
-			// TODO add website
-
-			return sb.toString();
-		}
-
-		/**
-		 * DOCME add JavaDoc for method appendOption
-		 * 
-		 * @param sb
-		 * @param option
-		 * @return
-		 * @since 0.1.0
-		 */
-		private void appendOption(StringBuilder sb, Option option) {
-			sb.append("\n    ").append(option.longName());
-
-			if (option.hasValue()) {
-				sb.append(" <").append(option.valueName()).append(">");
-			}
-		}
-
-		/**
-		 * DOCME add JavaDoc for method appendOptions
-		 * 
-		 * @param sb
-		 * @since 0.1.0
-		 */
-		private void appendOptions(StringBuilder sb) {
-			if (!options.options.isEmpty()) {
-				sb.append("\noptions:");
-			}
-
-			options.options.stream().sorted((o1, o2) -> o1.longName().compareToIgnoreCase(o2.longName()))
-					.forEach(o -> appendOption(sb, o));
-		}
+		String getFull();
 	}
 
 	/**
@@ -99,6 +61,60 @@ public abstract class Program {
 		@Override
 		public void accept(Option option) {
 			options.add(option);
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for Program
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	private class ProgramHelpGenerator implements HelpGenerator {
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Override
+		public String getFull() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(getName());
+			appendOptions(sb);
+			// TODO add website
+
+			return sb.toString();
+		}
+
+		/**
+		 * DOCME add JavaDoc for method appendOption
+		 * 
+		 * @param sb
+		 * @param option
+		 * @return
+		 * @since 0.1.0
+		 */
+		private void appendOption(StringBuilder sb, Option option) {
+			sb.append("\n    ").append("--").append(option.longName());
+
+			if (option.hasValue()) {
+				sb.append(" <").append(option.valueName()).append(">");
+			}
+		}
+
+		/**
+		 * DOCME add JavaDoc for method appendOptions
+		 * 
+		 * @param sb
+		 * @since 0.1.0
+		 */
+		private void appendOptions(StringBuilder sb) {
+			if (!options.options.isEmpty()) {
+				sb.append("\noptions:");
+			}
+
+			options.options.stream().sorted((o1, o2) -> o1.longName().compareToIgnoreCase(o2.longName()))
+					.forEach(o -> appendOption(sb, o));
 		}
 	}
 
@@ -157,6 +173,16 @@ public abstract class Program {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method getHelpGenerator
+	 * 
+	 * @return
+	 * @since 0.1.0
+	 */
+	protected HelpGenerator getHelpGenerator() {
+		return new ProgramHelpGenerator();
+	}
+
+	/**
 	 * DOCME add JavaDoc for method getName
 	 * 
 	 * @return
@@ -185,6 +211,7 @@ public abstract class Program {
 	 * @since 0.1.0
 	 */
 	protected void init(String[] args) throws InvalidProgramArgumentsException {
+		// TODO rename to initProgram
 		initOptionsInternal();
 
 		arguments = new Arguments(args, options.options);
@@ -209,6 +236,14 @@ public abstract class Program {
 	}
 
 	/**
+	 * DOCME add JavaDoc for method runProgram
+	 * 
+	 * @throws Exception
+	 * @since 0.1.0
+	 */
+	protected abstract void run() throws Exception;
+
+	/**
 	 * DOCME add JavaDoc for method run
 	 * 
 	 * @throws Exception
@@ -216,19 +251,11 @@ public abstract class Program {
 	 */
 	protected void runProgram() throws Exception {
 		if (arguments.hasOption(options.help)) {
-			System.out.println(new HelpGenerator().generate());
+			System.out.println(getHelpGenerator().getFull());
 		} else {
 			run();
 		}
 	}
-
-	/**
-	 * DOCME add JavaDoc for method runProgram
-	 * 
-	 * @throws Exception
-	 * @since 0.1.0
-	 */
-	protected abstract void run() throws Exception;
 
 	/**
 	 * DOCME add JavaDoc for method initOptionsInternal

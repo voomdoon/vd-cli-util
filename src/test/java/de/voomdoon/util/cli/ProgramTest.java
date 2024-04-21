@@ -111,7 +111,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 	 * @since 0.1.0
 	 */
 	@Nested
-	class HelpTest extends TestBase {
+	class HelpTest extends HelpTestBase {
 
 		/**
 		 * DOCME add JavaDoc for ProgramTest.HelpTest
@@ -120,7 +120,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 		 *
 		 * @since 0.1.0
 		 */
-		private class ProgramWithName extends NoOpTestProgram {
+		public static class ProgramWithName extends NoOpTestProgram {
 
 			/**
 			 * @since 0.1.0
@@ -134,19 +134,11 @@ class ProgramTest extends LoggingCheckingTestBase {
 		/**
 		 * @since 0.1.0
 		 */
-		private static final String HELP = "--help";
-
-		/**
-		 * @since 0.1.0
-		 */
 		@Test
 		void test_name_default() throws Exception {
 			logTestStart();
 
-			NoOpTestProgram program = new NoOpTestProgram();
-			program.init(new String[] { HELP });
-
-			runAndAssert(program).contains("NoOpTestProgram");
+			initRunAndAssert(NoOpTestProgram.class).contains("NoOpTestProgram");
 		}
 
 		/**
@@ -156,10 +148,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 		void test_name_specific() throws Exception {
 			logTestStart();
 
-			Program program = new ProgramWithName();
-			program.init(new String[] { HELP });
-
-			runAndAssert(program).contains("test-program");
+			initRunAndAssert(ProgramWithName.class).contains("test-program");
 		}
 
 		/**
@@ -169,10 +158,8 @@ class ProgramTest extends LoggingCheckingTestBase {
 		void test_option_longName() throws Exception {
 			logTestStart();
 
-			Program program = new TestProgramWithOptionWithLongNameAndValue();
-			program.init(new String[] { HELP });
-
-			runAndAssert(program).contains(TestProgramWithOptionWithLongNameAndValue.TEST_OPTION);
+			initRunAndAssert(TestProgramWithOptionWithLongNameAndValue.class)
+					.contains("--" + TestProgramWithOptionWithLongNameAndValue.TEST_OPTION);
 		}
 
 		/**
@@ -182,17 +169,46 @@ class ProgramTest extends LoggingCheckingTestBase {
 		void test_option_valueName() throws Exception {
 			logTestStart();
 
-			Program program = new TestProgramWithOptionWithLongNameAndValue();
-			program.init(new String[] { HELP });
-
-			runAndAssert(program)
+			initRunAndAssert(TestProgramWithOptionWithLongNameAndValue.class)
 					.contains(" <" + TestProgramWithOptionWithLongNameAndValue.TEST_OPTION_VALUE_NAME + ">");
 		}
+	}
+
+	/**
+	 * 
+	 * DOCME add JavaDoc for ProgramTest
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	abstract static class HelpTestBase extends TestBase {
 
 		/**
 		 * @since 0.1.0
 		 */
-		private AbstractStringAssert<?> runAndAssert(Program program) throws InvocationTargetException {
+		protected static final String HELP = "--help";
+
+		/**
+		 * @since 0.1.0
+		 */
+		AbstractStringAssert<?> initRunAndAssert(Class<? extends Program> clazz) throws InvocationTargetException {
+			Program program;
+
+			try {
+				program = clazz.getConstructor().newInstance();
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				// TODO implement error handling
+				throw new RuntimeException("Error at 'initRunAndAssert': " + e.getMessage(), e);
+			}
+
+			try {
+				program.init(new String[] { HELP });
+			} catch (InvalidProgramArgumentsException e) {
+				throw new RuntimeException("Error at 'initRunAndAssert': " + e.getMessage(), e);
+			}
+
 			SystemOutput output = SystemOutput.run(() -> program.runProgram());
 
 			output.log(logger);

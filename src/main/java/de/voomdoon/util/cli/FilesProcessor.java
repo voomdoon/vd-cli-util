@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  * @author André Schulz
  *
  * @since 0.1.0
- * @deprecated TODO move to some other module
+ * @deprecated TODO move to some other (io) module
  */
 @Deprecated
 public class FilesProcessor {
