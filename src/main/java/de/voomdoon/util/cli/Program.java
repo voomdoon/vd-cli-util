@@ -154,14 +154,6 @@ public abstract class Program {
 	}
 
 	/**
-	 * @return arguments
-	 * @since 0.1.0
-	 */
-	public Arguments getArguments() {
-		return arguments;
-	}
-
-	/**
 	 * DOCME add JavaDoc for method addOption
 	 * 
 	 * @return
@@ -169,6 +161,14 @@ public abstract class Program {
 	 */
 	protected OptionBuilder addOption() {
 		return new OptionBuilder(options);
+	}
+
+	/**
+	 * @return arguments
+	 * @since 0.1.0
+	 */
+	protected Arguments getArguments() {
+		return arguments;
 	}
 
 	/**
