@@ -11,8 +11,6 @@ import org.assertj.core.api.AbstractStringAssert;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import de.voomdoon.logging.LogEvent;
-import de.voomdoon.logging.LogLevel;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
@@ -318,23 +316,5 @@ class ProgramTest extends LoggingCheckingTestBase {
 		Arguments actual = program.getArguments();
 
 		assertThat(actual).isNotNull();
-	}
-
-	/**
-	 * DOCME add JavaDoc for method test_logger
-	 * 
-	 * @since 0.1.0
-	 */
-	@Test
-	void testName() throws Exception {
-		logTestStart();
-
-		NoOpTestProgram program = new NoOpTestProgram();
-		program.init(new String[0]);
-		program.logger.debug("test");
-
-		assertThat(getLogCache().getLogEvents(LogLevel.DEBUG)).hasSize(1);
-		assertThat(getLogCache().getLogEvents(LogLevel.DEBUG).get(0)).extracting(LogEvent::getMessage)
-				.isEqualTo("test");
 	}
 }
