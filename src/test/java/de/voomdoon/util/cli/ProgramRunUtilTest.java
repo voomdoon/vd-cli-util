@@ -9,7 +9,7 @@ import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 
 /**
- * DOCME add JavaDoc for
+ * Test class for {@link ProgramRunUtil}
  *
  * @author André Schulz
  *
@@ -18,7 +18,7 @@ import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 class ProgramRunUtilTest {
 
 	/**
-	 * DOCME add JavaDoc for ProgramRunUtilTest
+	 * Test class for {@link ProgramRunUtil#run(Class, String[])}
 	 *
 	 * @author André Schulz
 	 *

@@ -121,8 +121,6 @@ class MainBaseTest {
 		 */
 		public static class InvalidProgramWithoutMainMethod extends Program {
 
-			// XXX to sub-programs really need main method?
-
 			/**
 			 * @param args
 			 * @since 0.1.0

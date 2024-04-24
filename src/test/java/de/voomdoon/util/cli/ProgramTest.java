@@ -247,8 +247,6 @@ class ProgramTest extends LoggingCheckingTestBase {
 	class Run_StringArray_Test extends TestBase {
 
 		/**
-		 * DOCME add JavaDoc for ProgramTest.RunTest
-		 *
 		 * @author André Schulz
 		 *
 		 * @since 0.1.0
@@ -261,8 +259,6 @@ class ProgramTest extends LoggingCheckingTestBase {
 			private static Optional<TestProgram> INSTANCE = Optional.empty();
 
 			/**
-			 * DOCME add JavaDoc for method run
-			 * 
 			 * @param args
 			 * @since 0.1.0
 			 */
@@ -276,14 +272,10 @@ class ProgramTest extends LoggingCheckingTestBase {
 			private final AtomicInteger runProgramCallCount = new AtomicInteger();
 
 			/**
-			 * DOCME add JavaDoc for constructor TestProgram
-			 * 
 			 * @param args
 			 * @since 0.1.0
 			 */
 			public TestProgram() {
-				super();
-
 				INSTANCE = Optional.of(this);
 			}
 
