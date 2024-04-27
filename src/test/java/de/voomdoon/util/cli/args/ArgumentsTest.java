@@ -53,7 +53,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 		String[] args = new String[] { "--" + ANY_LONG_NAME };
 		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue(ANY_VALUE_NAME).build());
 
-		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(InvalidProgramArgumentsException.class)
+		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(InvalidProgramOptionException.class)
 				.hasMessageContaining(ANY_LONG_NAME).hasMessageContaining("value");
 	}
 
@@ -61,7 +61,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 * @since 0.1.0
 	 */
 	@Test
-	void testGetOptionValue_longName() throws InvalidProgramArgumentsException {
+	void testGetOptionValue_longName() throws InvalidProgramOptionException {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME, TEST_VALUE };
@@ -94,7 +94,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 * @since 0.1.0
 	 */
 	@Test
-	void testHasOption_false() throws InvalidProgramArgumentsException {
+	void testHasOption_false() throws InvalidProgramOptionException {
 		logTestStart();
 
 		String[] args = new String[0];
@@ -110,7 +110,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 * @since 0.1.0
 	 */
 	@Test
-	void testHasOption_longName() throws InvalidProgramArgumentsException {
+	void testHasOption_longName() throws InvalidProgramOptionException {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME };

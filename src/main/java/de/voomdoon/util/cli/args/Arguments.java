@@ -34,10 +34,10 @@ public class Arguments {
 	 * 
 	 * @param args
 	 * @param options
-	 * @throws InvalidProgramArgumentsException
+	 * @throws InvalidProgramOptionException
 	 * @since 0.1.0
 	 */
-	public Arguments(String[] args, Set<Option> options) throws InvalidProgramArgumentsException {
+	public Arguments(String[] args, Set<Option> options) throws InvalidProgramOptionException {
 		this.args = new LinkedList<>(Arrays.asList(args));
 
 		parseOptions(options);
@@ -97,11 +97,11 @@ public class Arguments {
 	 * DOCME add JavaDoc for method parseOptions
 	 * 
 	 * @param options
-	 * @throws InvalidProgramArgumentsException
+	 * @throws InvalidProgramOptionException
 	 * 
 	 * @since 0.1.0
 	 */
-	private void parseOptions(Set<Option> options) throws InvalidProgramArgumentsException {
+	private void parseOptions(Set<Option> options) throws InvalidProgramOptionException {
 		Map<String, Option> longNameOptions = options.stream()
 				.collect(Collectors.toMap(Option::longName, Function.identity()));
 
@@ -126,17 +126,17 @@ public class Arguments {
 
 	/**
 	 * @param option
-	 * @throws InvalidProgramArgumentsException
+	 * @throws InvalidProgramOptionException
 	 * @since 0.1.0
 	 */
-	private void parseOptionValue(Option option) throws InvalidProgramArgumentsException {
+	private void parseOptionValue(Option option) throws InvalidProgramOptionException {
 		args.poll();
 
 		if (option.hasValue()) {
 			if (!args.isEmpty()) {
 				optionValues.put(option, args.poll());
 			} else {
-				throw new InvalidProgramArgumentsException(option, "missing value");
+				throw new InvalidProgramOptionException(option, "missing value");
 			}
 		} else {
 			optionValues.put(option, "true");

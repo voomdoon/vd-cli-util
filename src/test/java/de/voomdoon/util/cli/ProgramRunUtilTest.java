@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 
 /**
  * Test class for {@link ProgramRunUtil}
@@ -28,27 +29,6 @@ class ProgramRunUtilTest {
 	class Run_Class_StringArray_Test extends TestBase {
 
 		/**
-		 * @author André Schulz
-		 *
-		 * @since 0.1.0
-		 */
-		public static class TestProgramWithMandatoryArgument extends Program {
-
-			/**
-			 * @since 0.1.0
-			 */
-			private static final String ARGUMENT_NAME = "manatory-arg";
-
-			/**
-			 * @since 0.1.0
-			 */
-			@Override
-			public void run() throws Exception {
-				pollArg(ARGUMENT_NAME);
-			}
-		}
-
-		/**
 		 * @since 0.1.0
 		 */
 		@Test
@@ -58,7 +38,7 @@ class ProgramRunUtilTest {
 			String[] args = new String[0];
 
 			assertThatThrownBy(() -> ProgramRunUtil.run(TestProgramWithMandatoryArgument.class, args))
-					.isInstanceOf(ProgramRunException.class).hasCauseInstanceOf(MissingMandatoryArgumentException.class)
+					.isInstanceOf(MissingMandatoryArgumentException.class)
 					.hasMessageContaining(TestProgramWithMandatoryArgument.ARGUMENT_NAME);
 		}
 	}

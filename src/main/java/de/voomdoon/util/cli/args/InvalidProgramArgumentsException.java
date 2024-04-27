@@ -7,21 +7,20 @@ package de.voomdoon.util.cli.args;
  *
  * @since 0.1.0
  */
-public class InvalidProgramArgumentsException extends Exception {
+public abstract class InvalidProgramArgumentsException extends Exception {
 
 	/**
 	 * @since 0.1.0
 	 */
-	private static final long serialVersionUID = -9008776324532151311L;
+	private static final long serialVersionUID = -1062301974641691277L;
 
 	/**
 	 * DOCME add JavaDoc for constructor InvalidProgramArgumentsException
 	 * 
-	 * @param option
 	 * @param message
 	 * @since 0.1.0
 	 */
-	public InvalidProgramArgumentsException(Option option, String message) {
-		super("Invalid argument for option " + option.longName() + ": " + message);
+	protected InvalidProgramArgumentsException(String message) {
+		super(message);
 	}
 }

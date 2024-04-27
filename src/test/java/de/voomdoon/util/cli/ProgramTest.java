@@ -14,9 +14,10 @@ import org.junit.jupiter.api.Test;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
-import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
+import de.voomdoon.util.cli.args.InvalidProgramOptionException;
 import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 import de.voomdoon.util.cli.test.NoOpTestProgram;
+import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.test.TestProgramWithOptionWithLongNameAndValue;
 import de.voomdoon.util.commons.SystemOutput;
 
@@ -38,11 +39,11 @@ class ProgramTest extends LoggingCheckingTestBase {
 	class GetOptionValueTest extends TestBase {
 
 		/**
-		 * @throws InvalidProgramArgumentsException
+		 * @throws InvalidProgramOptionException
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_absent() throws InvalidProgramArgumentsException {
+		void test_absent() throws InvalidProgramOptionException {
 			logTestStart();
 
 			NoOpTestProgram program = new TestProgramWithOptionWithLongNameAndValue();
@@ -171,7 +172,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 
 			try {
 				program.init(new String[] { HELP });
-			} catch (InvalidProgramArgumentsException e) {
+			} catch (InvalidProgramOptionException e) {
 				throw new RuntimeException("Error at 'initRunAndAssert': " + e.getMessage(), e);
 			}
 
@@ -284,6 +285,22 @@ class ProgramTest extends LoggingCheckingTestBase {
 			protected void run() throws Exception {
 				runProgramCallCount.incrementAndGet();
 			}
+		}
+
+		/**
+		 * DOCME add JavaDoc for method test_error_missingMandatoryArgument_nameIsPrinted
+		 * 
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_error_missingMandatoryArgument_nameIsPrinted() throws Exception {
+			logTestStart();
+
+			SystemOutput output = SystemOutput.run(() -> TestProgramWithMandatoryArgument.run(new String[0]));
+			output.log(logger);
+
+			assertThat(output.getErr()).contains(TestProgramWithMandatoryArgument.ARGUMENT_NAME)
+					.doesNotContain("Exception");
 		}
 
 		/**

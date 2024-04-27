@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
 import de.voomdoon.util.cli.args.Arguments;
-import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
+import de.voomdoon.util.cli.args.InvalidProgramOptionException;
 import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 import de.voomdoon.util.cli.args.Option;
 import de.voomdoon.util.cli.args.OptionBuilder;
@@ -129,6 +129,19 @@ public abstract class Program {
 	}
 
 	/**
+	 * Intended to be called by {@code main} method.
+	 * 
+	 * @param clazz
+	 * @param args
+	 * @since 0.1.0
+	 * @deprecated testing only
+	 */
+	@Deprecated
+	protected static void runWithoutExit(String[] args) {
+		ProgramRunUtil.runWithoutExit(args);
+	}
+
+	/**
 	 * @since 0.1.0
 	 */
 	protected final Logger logger = LogManager.getLogger(getClass());
@@ -205,11 +218,11 @@ public abstract class Program {
 	/**
 	 * DOCME add JavaDoc for method init
 	 * 
-	 * @throws InvalidProgramArgumentsException
+	 * @throws InvalidProgramOptionException
 	 * 
 	 * @since 0.1.0
 	 */
-	protected void init(String[] args) throws InvalidProgramArgumentsException {
+	protected void init(String[] args) throws InvalidProgramOptionException {
 		// TODO rename to initProgram
 		initOptionsInternal();
 

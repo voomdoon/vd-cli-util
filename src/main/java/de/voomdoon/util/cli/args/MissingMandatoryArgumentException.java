@@ -7,7 +7,7 @@ package de.voomdoon.util.cli.args;
  *
  * @since 0.1.0
  */
-public class MissingMandatoryArgumentException extends Exception {
+public class MissingMandatoryArgumentException extends InvalidProgramArgumentsException {
 
 	/**
 	 * @since 0.1.0
