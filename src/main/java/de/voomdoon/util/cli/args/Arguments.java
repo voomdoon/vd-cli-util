@@ -44,10 +44,9 @@ public class Arguments {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getOptionValue
-	 * 
 	 * @param option
-	 * @return
+	 *            {@link Option}
+	 * @return {@link Optional} of {@link String}
 	 * @since 0.1.0
 	 */
 	public Optional<String> getOptionValue(Option option) {
@@ -55,10 +54,9 @@ public class Arguments {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method hasOption
-	 * 
 	 * @param option
-	 * @return
+	 *            {@link Option}
+	 * @return {@code true} or {@code false}
 	 * @since 0.1.0
 	 */
 	public boolean hasOption(Option option) {
@@ -66,8 +64,8 @@ public class Arguments {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getAllRemaining
 	 * 
+	 * @return {@link List} of all remaining arguments
 	 * @since 0.1.0
 	 */
 	public List<String> pollAllArgs() {
@@ -78,10 +76,9 @@ public class Arguments {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method poll
-	 * 
 	 * @param name
-	 * @return
+	 *            name of the argument
+	 * @return {@link String}
 	 * @throws MissingMandatoryArgumentException
 	 * @since 0.1.0
 	 */
@@ -94,9 +91,8 @@ public class Arguments {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method parseOptions
-	 * 
 	 * @param options
+	 *            {@link Set} of {@link Option}
 	 * @throws InvalidProgramOptionException
 	 * 
 	 * @since 0.1.0

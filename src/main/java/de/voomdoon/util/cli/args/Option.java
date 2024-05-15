@@ -10,8 +10,6 @@ package de.voomdoon.util.cli.args;
 public record Option(String longName, String valueName) {
 
 	/**
-	 * DOCME add JavaDoc for method hasValue
-	 * 
 	 * @return
 	 * @since 0.1.0
 	 */

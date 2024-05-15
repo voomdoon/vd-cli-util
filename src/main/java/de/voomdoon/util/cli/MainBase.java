@@ -154,8 +154,6 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method initSubMains
-	 * 
 	 * @since 0.1.0
 	 */
 	private void initSubMains() {
@@ -165,8 +163,6 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method printHelp
-	 * 
 	 * @since 0.1.0
 	 */
 	private void printHelp() {
@@ -175,8 +171,6 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method println
-	 * 
 	 * @param message
 	 * @since 0.1.0
 	 */

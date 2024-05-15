@@ -23,8 +23,6 @@ import de.voomdoon.util.cli.args.OptionBuilder;
 public abstract class Program {
 
 	/**
-	 * DOCME add JavaDoc for Program
-	 *
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0
@@ -67,8 +65,6 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for Program
-	 *
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0
@@ -205,10 +201,9 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getOptionValue
-	 * 
 	 * @param option
-	 * @return
+	 *            {@link Option}
+	 * @return {@link Optional} of {@link String}
 	 * @since 0.1.0
 	 */
 	protected Optional<String> getOptionValue(Option option) {
@@ -216,8 +211,6 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method init
-	 * 
 	 * @throws InvalidProgramOptionException
 	 * 
 	 * @since 0.1.0
@@ -237,10 +230,9 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method pollArg
-	 * 
 	 * @param name
-	 * @return
+	 *            name of the argument
+	 * @return {@link String}
 	 * @throws MissingMandatoryArgumentException
 	 * @since 0.1.0
 	 */
@@ -249,7 +241,7 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method runProgram
+	 * Main method to be executed.
 	 * 
 	 * @throws Exception
 	 * @since 0.1.0
@@ -257,8 +249,6 @@ public abstract class Program {
 	protected abstract void run() throws Exception;
 
 	/**
-	 * DOCME add JavaDoc for method run
-	 * 
 	 * @throws Exception
 	 * @since 0.1.0
 	 */
@@ -271,8 +261,6 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method initOptionsInternal
-	 * 
 	 * @since 0.1.0
 	 */
 	private void initOptionsInternal() {
