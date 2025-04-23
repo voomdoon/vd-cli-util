@@ -22,6 +22,6 @@ public class InvalidProgramOptionException extends InvalidProgramArgumentsExcept
 	 * @since 0.1.0
 	 */
 	public InvalidProgramOptionException(Option option, String message) {
-		super("Invalid argument for option " + option.longName() + ": " + message);
+		super("Invalid argument for option '" + option.longName() + "': " + message);
 	}
 }
