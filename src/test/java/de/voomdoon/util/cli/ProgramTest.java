@@ -19,6 +19,7 @@ import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 import de.voomdoon.util.cli.test.NoOpTestProgram;
 import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.test.TestProgramWithOptionWithLongNameAndValue;
+import de.voomdoon.util.cli.testing.ProgramTestingUtil;
 import de.voomdoon.util.commons.SystemOutput;
 
 /**
@@ -296,7 +297,16 @@ class ProgramTest extends LoggingCheckingTestBase {
 		void test_error_missingMandatoryArgument_nameIsPrinted() throws Exception {
 			logTestStart();
 
-			SystemOutput output = SystemOutput.run(() -> TestProgramWithMandatoryArgument.run(new String[0]));
+			ProgramTestingUtil.enableTestingMode();
+
+			SystemOutput output = SystemOutput.run(() -> {
+				try {
+					TestProgramWithMandatoryArgument.run(new String[0]);
+				} catch (ProgramRunException e) {
+					// ignore
+				}
+			});
+
 			output.log(logger);
 
 			assertThat(output.getErr()).contains(TestProgramWithMandatoryArgument.ARGUMENT_NAME)

@@ -17,6 +17,20 @@ import lombok.experimental.UtilityClass;
 class ProgramRunUtil {
 
 	/**
+	 * @since 0.2.0
+	 */
+	private static boolean testingMode = false;
+
+	/**
+	 * DOCME add JavaDoc for method setTestingMode
+	 * 
+	 * @since 0.2.0
+	 */
+	static void enableTestingMode() {
+		testingMode = true;
+	}
+
+	/**
 	 * DOCME add JavaDoc for method run
 	 * 
 	 * @param clazz
@@ -57,7 +71,7 @@ class ProgramRunUtil {
 	 * @since 0.1.0
 	 */
 	static void run(String[] args) {
-		runInternal(args, true);
+		runInternal(args, !testingMode);
 	}
 
 	/**
@@ -89,6 +103,8 @@ class ProgramRunUtil {
 
 		if (exit) {
 			System.exit(-1);
+		} else {
+			throw new ProgramRunException(exception);
 		}
 	}
 

@@ -19,7 +19,7 @@ public class TestProgramWithMandatoryArgument extends Program {
 	 * @since 0.1.0
 	 */
 	public static void run(String[] args) {
-		Program.runWithoutExit(args);
+		Program.run(args);
 	}
 
 	/**
