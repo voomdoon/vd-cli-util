@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.MainBaseTest.TestMainBases.TestMain;
 import de.voomdoon.util.cli.MainBaseTest.TestMainBases.TestMainWithTwoSubPrograms;
-import de.voomdoon.util.cli.MainBaseTest.TestPrograms.InvalidProgramWithoutMainMethod;
-import de.voomdoon.util.cli.MainBaseTest.TestPrograms.ValidProgram;
+import de.voomdoon.util.cli.MainBaseTest.TestPrograms.InvalidTestProgramWithoutMainMethod;
+import de.voomdoon.util.cli.MainBaseTest.TestPrograms.ValidTestProgram;
 import de.voomdoon.util.cli.ProgramTest.HelpTestBase;
 import de.voomdoon.util.commons.SystemOutput;
 
@@ -44,7 +44,7 @@ class MainBaseTest {
 			 */
 			@Override
 			protected void registerSubMains() {
-				registerSubMain(SUB_KEY, InvalidProgramWithoutMainMethod.class);
+				registerSubMain(SUB_KEY, InvalidTestProgramWithoutMainMethod.class);
 			}
 		}
 
@@ -75,7 +75,7 @@ class MainBaseTest {
 			 */
 			@Override
 			protected void registerSubMains() {
-				registerSubMain(SUB_KEY, ValidProgram.class);
+				registerSubMain(SUB_KEY, ValidTestProgram.class);
 			}
 		}
 
@@ -101,8 +101,8 @@ class MainBaseTest {
 			 */
 			@Override
 			protected void registerSubMains() {
-				registerSubMain("test-sub-a", ValidProgram.class);
-				registerSubMain("test-sub-b", ValidProgram.class);// TODO other
+				registerSubMain("test-sub-a", ValidTestProgram.class);
+				registerSubMain("test-sub-b", ValidTestProgram.class);// TODO other
 			}
 		}
 	}
@@ -119,13 +119,13 @@ class MainBaseTest {
 		 *
 		 * @since 0.1.0
 		 */
-		public static class InvalidProgramWithoutMainMethod extends Program {
+		public static class InvalidTestProgramWithoutMainMethod extends Program {
 
 			/**
 			 * @param args
 			 * @since 0.1.0
 			 */
-			protected InvalidProgramWithoutMainMethod() {
+			protected InvalidTestProgramWithoutMainMethod() {
 				super();
 			}
 
@@ -145,7 +145,7 @@ class MainBaseTest {
 		 *
 		 * @since 0.1.0
 		 */
-		public static class ValidProgram extends Program {
+		public static class ValidTestProgram extends Program {
 
 			/**
 			 * @since 0.1.0
@@ -158,7 +158,7 @@ class MainBaseTest {
 			 * @param args
 			 * @since 0.1.0
 			 */
-			protected ValidProgram() {
+			protected ValidTestProgram() {
 				super();
 			}
 
@@ -225,7 +225,7 @@ class MainBaseTest {
 			main.init(new String[] { SUB_KEY, "test-arg" });
 			main.run();
 
-			assertThat(ValidProgram.ARGUMENTS).isEqualTo(List.of("test-arg"));
+			assertThat(ValidTestProgram.ARGUMENTS).isEqualTo(List.of("test-arg"));
 		}
 
 		/**
