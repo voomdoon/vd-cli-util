@@ -75,18 +75,6 @@ class ProgramRunUtil {
 	}
 
 	/**
-	 * Intended to be called by {@link Program#run(String[])} only.
-	 * 
-	 * @param args
-	 * @since 0.1.0
-	 * @deprecated testing only
-	 */
-	@Deprecated
-	static void runWithoutExit(String[] args) {
-		runInternal(args, false);
-	}
-
-	/**
 	 * DOCME add JavaDoc for method handleError
 	 * 
 	 * @param exception

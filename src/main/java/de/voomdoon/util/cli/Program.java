@@ -125,19 +125,6 @@ public abstract class Program {
 	}
 
 	/**
-	 * Intended to be called by {@code main} method.
-	 * 
-	 * @param clazz
-	 * @param args
-	 * @since 0.1.0
-	 * @deprecated testing only
-	 */
-	@Deprecated
-	protected static void runWithoutExit(String[] args) {
-		ProgramRunUtil.runWithoutExit(args);
-	}
-
-	/**
 	 * @since 0.1.0
 	 */
 	protected final Logger logger = LogManager.getLogger(getClass());
