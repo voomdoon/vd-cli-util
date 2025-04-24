@@ -128,7 +128,7 @@ public abstract class MainBase extends Program {
 			throw new ProgramRunException("Failed to find sub-main for '" + subMain + "!", getHelpString());
 		}
 
-		ProgramRunUtil.run(clazz, getArguments().pollAllArgs().toArray(new String[0]));
+		ProgramRunner.run(clazz, getArguments().pollAllArgs().toArray(new String[0]));
 	}
 
 	/**

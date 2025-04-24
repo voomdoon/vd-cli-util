@@ -1,7 +1,7 @@
 package de.voomdoon.util.cli;
 
 /**
- * Exception thrown by {@link ProgramRunUtil#run(String[])} and {@link ProgramRunUtil#run(Class, String[])}.
+ * Exception thrown by {@link ProgramRunner#run(String[])} and {@link ProgramRunner#run(Class, String[])}.
  *
  * @author André Schulz
  *

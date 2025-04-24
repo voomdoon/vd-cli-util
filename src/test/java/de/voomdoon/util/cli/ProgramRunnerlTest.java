@@ -20,16 +20,16 @@ import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.testing.ProgramTestingUtil;
 
 /**
- * Test class for {@link ProgramRunUtil}
+ * Test class for {@link ProgramRunner}
  *
  * @author André Schulz
  *
  * @since 0.1.0
  */
-class ProgramRunUtilTest {
+class ProgramRunnerlTest {
 
 	/**
-	 * Test class for {@link ProgramRunUtil#run(Class, String[])}
+	 * Test class for {@link ProgramRunner#run(Class, String[])}
 	 *
 	 * @author André Schulz
 	 *
@@ -63,7 +63,7 @@ class ProgramRunUtilTest {
 			LogManager.addLogEventHandler(this);
 
 			try {
-				ProgramRunUtil.run(ErrorTestProgram.class, new String[0]);
+				ProgramRunner.run(ErrorTestProgram.class, new String[0]);
 			} catch (Exception e) {
 				logger.debug("ignored exception: " + e.getMessage(), e);
 			}
@@ -82,7 +82,7 @@ class ProgramRunUtilTest {
 
 			String[] args = new String[0];
 
-			assertThatThrownBy(() -> ProgramRunUtil.run(TestProgramWithMandatoryArgument.class, args))
+			assertThatThrownBy(() -> ProgramRunner.run(TestProgramWithMandatoryArgument.class, args))
 					.isInstanceOf(ProgramExecutionException.class)
 					.hasCauseInstanceOf(MissingMandatoryArgumentException.class)//
 					.cause().hasMessageContaining(TestProgramWithMandatoryArgument.ARGUMENT_NAME);

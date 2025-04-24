@@ -14,7 +14,7 @@ import lombok.experimental.UtilityClass;
  * @since 0.1.0
  */
 @UtilityClass
-class ProgramRunUtil {
+class ProgramRunner {
 
 	/**
 	 * @since 0.2.0

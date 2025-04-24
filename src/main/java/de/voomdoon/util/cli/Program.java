@@ -121,7 +121,7 @@ public abstract class Program {
 	 * @since 0.1.0
 	 */
 	public static void run(String[] args) {
-		ProgramRunUtil.run(args);
+		ProgramRunner.run(args);
 	}
 
 	/**
