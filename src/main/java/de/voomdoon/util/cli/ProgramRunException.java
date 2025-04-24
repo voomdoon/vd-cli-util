@@ -3,7 +3,7 @@ package de.voomdoon.util.cli;
 import de.voomdoon.util.cli.args.InvalidProgramOptionException;
 
 /**
- * DOCME add JavaDoc for
+ * Exception thrown by {@link Program#run()}.
  *
  * @author André Schulz
  *

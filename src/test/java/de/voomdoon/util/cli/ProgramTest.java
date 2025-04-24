@@ -11,6 +11,7 @@ import org.assertj.core.api.AbstractStringAssert;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import de.voomdoon.logging.LogLevel;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
@@ -294,23 +295,21 @@ class ProgramTest extends LoggingCheckingTestBase {
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_error_missingMandatoryArgument_nameIsPrinted() throws Exception {
+		void test_error_logging_containsName() throws Exception {
 			logTestStart();
 
 			ProgramTestingUtil.enableTestingMode();
 
-			SystemOutput output = SystemOutput.run(() -> {
-				try {
-					TestProgramWithMandatoryArgument.run(new String[0]);
-				} catch (ProgramRunException e) {
-					// ignore
-				}
-			});
+			try {
+				TestProgramWithMandatoryArgument.run(new String[0]);
+			} catch (Exception e) {
+				logger.debug("ignored exception: " + e.getMessage(), e);
+			}
 
-			output.log(logger);
-
-			assertThat(output.getErr()).contains(TestProgramWithMandatoryArgument.ARGUMENT_NAME)
-					.doesNotContain("Exception");
+			assertThat(ProgramTest.super.getLogCache().getLogEvents(LogLevel.FATAL)).hasSize(1);
+			assertThat(ProgramTest.super.getLogCache().getLogEvents(LogLevel.FATAL).get(0).getMessage().toString())
+					.contains(TestProgramWithMandatoryArgument.ARGUMENT_NAME);
+			ProgramTest.super.getLogCache().clear();
 		}
 
 		/**

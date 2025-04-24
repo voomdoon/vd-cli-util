@@ -2,8 +2,8 @@ package de.voomdoon.util.cli;
 
 import java.lang.reflect.Constructor;
 
+import de.voomdoon.logging.LogManager;
 import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
-import de.voomdoon.util.cli.args.InvalidProgramOptionException;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -26,32 +26,14 @@ class ProgramRunUtil {
 	 * 
 	 * @param clazz
 	 * @param args
-	 * @throws InvalidProgramArgumentsException
+	 * @throws ProgramExecutionException
 	 * @since 0.1.0
 	 */
-	static void run(Class<? extends Program> clazz, String[] args) throws InvalidProgramArgumentsException {
-		Program program;
-
+	static void run(Class<? extends Program> clazz, String[] args) {
 		try {
-			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor();
-			program = constructor.newInstance();
+			runInternal(clazz, args);
 		} catch (Exception e) {
-			// TODO implement error handling
-			throw new RuntimeException("Failed to instantiate " + clazz.getName() + ": " + e.getMessage(), e);
-		}
-
-		try {
-			program.init(args);
-		} catch (InvalidProgramOptionException e) {
-			throw e;
-		}
-
-		try {
-			program.runProgram();
-		} catch (InvalidProgramArgumentsException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new ProgramRunException(e);
+			handleError(e, clazz);
 		}
 	}
 
@@ -59,10 +41,13 @@ class ProgramRunUtil {
 	 * Intended to be called by {@link Program#run(String[])} only.
 	 * 
 	 * @param args
+	 * @throws ProgramExecutionException
 	 * @since 0.1.0
 	 */
 	static void run(String[] args) {
-		runInternal(args);
+		Class<? extends Program> programClass = getProgramClass();
+
+		run(programClass, args);
 	}
 
 	/**
@@ -76,33 +61,12 @@ class ProgramRunUtil {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method handleError
+	 * DOCME add JavaDoc for method getProgramClass
 	 * 
-	 * @param exception
-	 * @since 0.1.0
+	 * @return
+	 * @since 0.2.0
 	 */
-	private static void handleError(Exception exception) {
-		if (exception instanceof InvalidProgramArgumentsException) {
-			System.err.println(exception.getMessage());
-		} else {
-			// TODO implement handleError
-			throw new UnsupportedOperationException("Method 'handleError' not implemented yet", exception);
-		}
-
-		if (!testingMode) {
-			System.exit(-1);
-		} else {
-			throw new ProgramRunException(exception);
-		}
-	}
-
-	/**
-	 * DOCME add JavaDoc for method runInternal
-	 * 
-	 * @param args
-	 * @since 0.1.0
-	 */
-	private static void runInternal(String[] args) {
+	private static Class<? extends Program> getProgramClass() {
 		String className = Thread.currentThread().getStackTrace()[4].getClassName();
 
 		Class<?> clazz;
@@ -115,11 +79,58 @@ class ProgramRunUtil {
 
 		@SuppressWarnings("unchecked")
 		Class<? extends Program> programmClass = (Class<? extends Program>) clazz;
+		return programmClass;
+	}
+
+	/**
+	 * DOCME add JavaDoc for method handleError
+	 * 
+	 * @param exception
+	 * @param programmClass
+	 * @since 0.1.0
+	 */
+	private static void handleError(Exception exception, Class<? extends Program> programmClass) {
+		if (!testingMode) {
+			System.err.println(exception.getMessage());
+		} else {
+			LogManager.getLogger(programmClass).fatal(exception.getMessage());
+		}
+
+		if (!testingMode) {
+			System.exit(-1);// FEATURE #56: use different exit codes for different errors
+		} else {
+			throw new ProgramExecutionException(exception);
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for method runInternal
+	 * 
+	 * @param clazz
+	 * @param args
+	 * @throws InvalidProgramArgumentsException
+	 * @since 0.1.0
+	 */
+	private static void runInternal(Class<? extends Program> clazz, String[] args)
+			throws InvalidProgramArgumentsException {
+		Program program;
 
 		try {
-			run(programmClass, args);
+			Constructor<? extends Program> constructor = clazz.getDeclaredConstructor();
+			program = constructor.newInstance();
 		} catch (Exception e) {
-			handleError(e);
+			// TODO implement error handling
+			throw new RuntimeException("Failed to instantiate " + clazz.getName() + ": " + e.getMessage(), e);
+		}
+
+		program.init(args);
+
+		try {
+			program.runProgram();
+		} catch (InvalidProgramArgumentsException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new ProgramRunException(e);
 		}
 	}
 }

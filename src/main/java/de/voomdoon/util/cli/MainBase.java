@@ -3,7 +3,6 @@ package de.voomdoon.util.cli;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
 import de.voomdoon.util.cli.args.InvalidProgramOptionException;
 import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 
@@ -129,12 +128,7 @@ public abstract class MainBase extends Program {
 			throw new ProgramRunException("Failed to find sub-main for '" + subMain + "!", getHelpString());
 		}
 
-		try {
-			ProgramRunUtil.run(clazz, getArguments().pollAllArgs().toArray(new String[0]));
-		} catch (InvalidProgramArgumentsException e) {
-			// TODO implement error handling
-			throw new RuntimeException("Error at 'run': " + e.getMessage(), e);
-		}
+		ProgramRunUtil.run(clazz, getArguments().pollAllArgs().toArray(new String[0]));
 	}
 
 	/**
