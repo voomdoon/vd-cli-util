@@ -238,7 +238,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 	}
 
 	/**
-	 * Test class for {@link Program#run(String[])}.
+	 * Tests for {@link Program#run(String[])}.
 	 *
 	 * @author André Schulz
 	 *

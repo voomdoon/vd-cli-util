@@ -204,7 +204,7 @@ class MainBaseTest {
 	}
 
 	/**
-	 * Test class for {@link MainBase#run()}.
+	 * Tests for {@link MainBase#run()}.
 	 *
 	 * @author André Schulz
 	 *

@@ -20,7 +20,7 @@ import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.testing.ProgramTestingUtil;
 
 /**
- * Test class for {@link ProgramRunner}
+ * Tests for {@link ProgramRunner}
  *
  * @author André Schulz
  *
@@ -29,7 +29,7 @@ import de.voomdoon.util.cli.testing.ProgramTestingUtil;
 class ProgramRunnerlTest {
 
 	/**
-	 * Test class for {@link ProgramRunner#run(Class, String[])}
+	 * Tests for {@link ProgramRunner#run(Class, String[])}
 	 *
 	 * @author André Schulz
 	 *
