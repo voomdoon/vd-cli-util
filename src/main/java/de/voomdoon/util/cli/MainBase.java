@@ -3,8 +3,8 @@ package de.voomdoon.util.cli;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.voomdoon.util.cli.args.InvalidProgramOptionException;
-import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
+import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
 
 /**
  * DOCME add JavaDoc for

@@ -14,7 +14,7 @@ import de.voomdoon.logging.LogEventHandler;
 import de.voomdoon.logging.LogLevel;
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
 import de.voomdoon.util.cli.test.ErrorTestProgram;
 import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.testing.ProgramTestingUtil;

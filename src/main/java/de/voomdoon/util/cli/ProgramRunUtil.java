@@ -3,7 +3,7 @@ package de.voomdoon.util.cli;
 import java.lang.reflect.Constructor;
 
 import de.voomdoon.logging.LogManager;
-import de.voomdoon.util.cli.args.InvalidProgramArgumentsException;
+import de.voomdoon.util.cli.args.exception.InvalidProgramArgumentsException;
 import lombok.experimental.UtilityClass;
 
 /**

@@ -10,6 +10,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
+import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
+
 /**
  * DOCME add JavaDoc for
  *

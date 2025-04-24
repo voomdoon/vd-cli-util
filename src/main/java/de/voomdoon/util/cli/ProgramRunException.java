@@ -1,6 +1,6 @@
 package de.voomdoon.util.cli;
 
-import de.voomdoon.util.cli.args.InvalidProgramOptionException;
+import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
 
 /**
  * Exception thrown by {@link Program#run()}.

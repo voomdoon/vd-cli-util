@@ -8,10 +8,10 @@ import java.util.function.Consumer;
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
 import de.voomdoon.util.cli.args.Arguments;
-import de.voomdoon.util.cli.args.InvalidProgramOptionException;
-import de.voomdoon.util.cli.args.MissingMandatoryArgumentException;
 import de.voomdoon.util.cli.args.Option;
 import de.voomdoon.util.cli.args.OptionBuilder;
+import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
+import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
 
 /**
  * Base class for command line programs.

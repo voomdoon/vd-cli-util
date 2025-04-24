@@ -1,4 +1,4 @@
-package de.voomdoon.util.cli.args;
+package de.voomdoon.util.cli.args.exception;
 
 /**
  * DOCME add JavaDoc for

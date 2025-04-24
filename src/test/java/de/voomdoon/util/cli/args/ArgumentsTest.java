@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
+import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
 
 /**
  * DOCME add JavaDoc for
