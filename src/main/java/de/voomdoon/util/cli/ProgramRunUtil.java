@@ -62,7 +62,7 @@ class ProgramRunUtil {
 	 * @since 0.1.0
 	 */
 	static void run(String[] args) {
-		runInternal(args, !testingMode);
+		runInternal(args);
 	}
 
 	/**
@@ -79,10 +79,9 @@ class ProgramRunUtil {
 	 * DOCME add JavaDoc for method handleError
 	 * 
 	 * @param exception
-	 * @param exit
 	 * @since 0.1.0
 	 */
-	private static void handleError(Exception exception, boolean exit) {
+	private static void handleError(Exception exception) {
 		if (exception instanceof InvalidProgramArgumentsException) {
 			System.err.println(exception.getMessage());
 		} else {
@@ -90,7 +89,7 @@ class ProgramRunUtil {
 			throw new UnsupportedOperationException("Method 'handleError' not implemented yet", exception);
 		}
 
-		if (exit) {
+		if (!testingMode) {
 			System.exit(-1);
 		} else {
 			throw new ProgramRunException(exception);
@@ -101,10 +100,9 @@ class ProgramRunUtil {
 	 * DOCME add JavaDoc for method runInternal
 	 * 
 	 * @param args
-	 * @param exit
 	 * @since 0.1.0
 	 */
-	private static void runInternal(String[] args, boolean exit) {
+	private static void runInternal(String[] args) {
 		String className = Thread.currentThread().getStackTrace()[4].getClassName();
 
 		Class<?> clazz;
@@ -121,7 +119,7 @@ class ProgramRunUtil {
 		try {
 			run(programmClass, args);
 		} catch (Exception e) {
-			handleError(e, exit);
+			handleError(e);
 		}
 	}
 }
