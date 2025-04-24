@@ -43,7 +43,7 @@ public abstract class Program {
 	 *
 	 * @since 0.1.0
 	 */
-	private class Options implements Consumer<Option> {
+	private class ProgramOptions implements Consumer<Option> {
 
 		/**
 		 * @since 0.1.0
@@ -137,7 +137,7 @@ public abstract class Program {
 	/**
 	 * @since 0.1.0
 	 */
-	private Options options;
+	private ProgramOptions options;
 
 	/**
 	 * DOCME add JavaDoc for constructor Program
@@ -251,7 +251,7 @@ public abstract class Program {
 	 * @since 0.1.0
 	 */
 	private void initOptionsInternal() {
-		options = new Options();
+		options = new ProgramOptions();
 		options.help = addOption().longName("help").build();
 		initOptions();
 	}
