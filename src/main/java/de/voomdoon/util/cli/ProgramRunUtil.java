@@ -7,7 +7,7 @@ import de.voomdoon.util.cli.args.InvalidProgramOptionException;
 import lombok.experimental.UtilityClass;
 
 /**
- * DOCME add JavaDoc for
+ * Utility class to run a {@link Program}.
  *
  * @author André Schulz
  *
@@ -20,15 +20,6 @@ class ProgramRunUtil {
 	 * @since 0.2.0
 	 */
 	private static boolean testingMode = false;
-
-	/**
-	 * DOCME add JavaDoc for method setTestingMode
-	 * 
-	 * @since 0.2.0
-	 */
-	static void enableTestingMode() {
-		testingMode = true;
-	}
 
 	/**
 	 * DOCME add JavaDoc for method run
@@ -72,6 +63,16 @@ class ProgramRunUtil {
 	 */
 	static void run(String[] args) {
 		runInternal(args, !testingMode);
+	}
+
+	/**
+	 * This method is used via reflection by {@code ProgramTestingUtil}.
+	 * 
+	 * @since 0.2.0
+	 */
+	@SuppressWarnings("unused")
+	private static void enableTestingMode() {
+		testingMode = true;
 	}
 
 	/**
