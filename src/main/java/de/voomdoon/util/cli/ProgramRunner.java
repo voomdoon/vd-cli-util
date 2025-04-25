@@ -3,7 +3,7 @@ package de.voomdoon.util.cli;
 import java.lang.reflect.Constructor;
 
 import de.voomdoon.logging.LogManager;
-import de.voomdoon.util.cli.args.exception.InvalidProgramArgumentsException;
+import de.voomdoon.util.cli.args.exception.CliInputException;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -108,11 +108,11 @@ class ProgramRunner {
 	 * 
 	 * @param clazz
 	 * @param args
-	 * @throws InvalidProgramArgumentsException
+	 * @throws CliInputException
 	 * @since 0.1.0
 	 */
 	private static void runInternal(Class<? extends Program> clazz, String[] args)
-			throws InvalidProgramArgumentsException {
+			throws CliInputException {
 		Program program;
 
 		try {
@@ -127,7 +127,7 @@ class ProgramRunner {
 
 		try {
 			program.runProgram();
-		} catch (InvalidProgramArgumentsException e) {
+		} catch (CliInputException e) {
 			throw e;
 		} catch (Exception e) {
 			throw new ProgramRunException(e);

@@ -3,8 +3,8 @@ package de.voomdoon.util.cli;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
-import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
+import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 
 /**
  * DOCME add JavaDoc for
@@ -71,7 +71,7 @@ public abstract class MainBase extends Program {
 	 * @since 0.1.0
 	 */
 	@Override
-	protected void init(String[] args) throws InvalidProgramOptionException {
+	protected void init(String[] args) throws CliOptionException {
 		super.init(args);
 
 		initSubMains();
@@ -116,7 +116,7 @@ public abstract class MainBase extends Program {
 
 		try {
 			subMain = pollArg("sub-main");
-		} catch (MissingMandatoryArgumentException e) {
+		} catch (MissingCliArgumentException e) {
 			System.err.println("Missing argument 'sub-main'!");
 			printHelp();
 			return;

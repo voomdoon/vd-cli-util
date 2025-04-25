@@ -15,8 +15,8 @@ import de.voomdoon.logging.LogLevel;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
-import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
-import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
+import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 import de.voomdoon.util.cli.test.NoOpTestProgram;
 import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.test.TestProgramWithOptionWithLongNameAndValue;
@@ -43,11 +43,11 @@ class ProgramTest extends LoggingCheckingTestBase {
 	class GetOptionValueTest extends TestBase {
 
 		/**
-		 * @throws InvalidProgramOptionException
+		 * @throws CliOptionException
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_absent() throws InvalidProgramOptionException {
+		void test_absent() throws CliOptionException {
 			logTestStart();
 
 			NoOpTestProgram program = new TestProgramWithOptionWithLongNameAndValue();
@@ -176,7 +176,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 
 			try {
 				program.init(new String[] { HELP });
-			} catch (InvalidProgramOptionException e) {
+			} catch (CliOptionException e) {
 				throw new RuntimeException("Error at 'initRunAndAssert': " + e.getMessage(), e);
 			}
 
@@ -208,7 +208,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 			NoOpTestProgram program = new NoOpTestProgram();
 			program.init(new String[0]);
 
-			assertThatThrownBy(() -> program.pollArg("test-name")).isInstanceOf(MissingMandatoryArgumentException.class)
+			assertThatThrownBy(() -> program.pollArg("test-name")).isInstanceOf(MissingCliArgumentException.class)
 					.hasMessageContaining("test-name");
 		}
 

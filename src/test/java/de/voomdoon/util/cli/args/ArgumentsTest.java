@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
+import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 
 /**
  * Tests for {@link Arguments}.
@@ -54,7 +54,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 		String[] args = new String[] { "--" + ANY_LONG_NAME };
 		Set<Option> options = Set.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue(ANY_VALUE_NAME).build());
 
-		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(InvalidProgramOptionException.class)
+		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(CliOptionException.class)
 				.hasMessageContaining(ANY_LONG_NAME).hasMessageContaining("value");
 	}
 
@@ -62,7 +62,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 * @since 0.1.0
 	 */
 	@Test
-	void testGetOptionValue_longName() throws InvalidProgramOptionException {
+	void testGetOptionValue_longName() throws CliOptionException {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME, TEST_VALUE };
@@ -95,7 +95,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 * @since 0.1.0
 	 */
 	@Test
-	void testHasOption_false() throws InvalidProgramOptionException {
+	void testHasOption_false() throws CliOptionException {
 		logTestStart();
 
 		String[] args = new String[0];
@@ -111,7 +111,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 * @since 0.1.0
 	 */
 	@Test
-	void testHasOption_longName() throws InvalidProgramOptionException {
+	void testHasOption_longName() throws CliOptionException {
 		logTestStart();
 
 		String[] args = new String[] { "--" + ANY_LONG_NAME };

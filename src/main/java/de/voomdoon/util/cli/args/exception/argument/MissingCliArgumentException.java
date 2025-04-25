@@ -1,13 +1,13 @@
-package de.voomdoon.util.cli.args.exception;
+package de.voomdoon.util.cli.args.exception.argument;
 
 /**
- * DOCME add JavaDoc for
+ * {@link CliArgumentException} for missing positional argument.
  *
  * @author André Schulz
  *
  * @since 0.1.0
  */
-public class MissingMandatoryArgumentException extends InvalidProgramArgumentsException {
+public class MissingCliArgumentException extends CliArgumentException {
 
 	/**
 	 * @since 0.1.0
@@ -20,13 +20,12 @@ public class MissingMandatoryArgumentException extends InvalidProgramArgumentsEx
 	private String argumentName;
 
 	/**
-	 * DOCME add JavaDoc for constructor MIssingMandatoryArgumentException
-	 * 
 	 * @param argumentName
+	 *            {@link String}
 	 * @since 0.1.0
 	 */
-	public MissingMandatoryArgumentException(String argumentName) {
-		super("Missing mandatory argument: " + argumentName + "!");
+	public MissingCliArgumentException(String argumentName) {
+		super("Missing argument: " + argumentName + "!");
 
 		this.argumentName = argumentName;
 	}

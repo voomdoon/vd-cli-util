@@ -1,13 +1,15 @@
 package de.voomdoon.util.cli.args.exception;
 
+import java.util.Objects;
+
 /**
- * DOCME add JavaDoc for
+ * Base {@link Exception} for all issues related to CLI input.
  *
  * @author André Schulz
  *
  * @since 0.1.0
  */
-public abstract class InvalidProgramArgumentsException extends Exception {
+public abstract class CliInputException extends Exception {
 
 	/**
 	 * @since 0.1.0
@@ -18,7 +20,7 @@ public abstract class InvalidProgramArgumentsException extends Exception {
 	 * @param message
 	 * @since 0.1.0
 	 */
-	protected InvalidProgramArgumentsException(String message) {
-		super(message);
+	protected CliInputException(String message) {
+		super(Objects.requireNonNull(message, "message"));
 	}
 }

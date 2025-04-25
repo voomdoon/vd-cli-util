@@ -10,8 +10,8 @@ import de.voomdoon.logging.Logger;
 import de.voomdoon.util.cli.args.Arguments;
 import de.voomdoon.util.cli.args.Option;
 import de.voomdoon.util.cli.args.OptionBuilder;
-import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
-import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
+import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 
 /**
  * Base class for command line programs.
@@ -198,11 +198,11 @@ public abstract class Program {
 	}
 
 	/**
-	 * @throws InvalidProgramOptionException
+	 * @throws CliOptionException
 	 * 
 	 * @since 0.1.0
 	 */
-	protected void init(String[] args) throws InvalidProgramOptionException {
+	protected void init(String[] args) throws CliOptionException {
 		// TODO rename to initProgram
 		initOptionsInternal();
 
@@ -220,10 +220,10 @@ public abstract class Program {
 	 * @param name
 	 *            name of the argument
 	 * @return {@link String}
-	 * @throws MissingMandatoryArgumentException
+	 * @throws MissingCliArgumentException
 	 * @since 0.1.0
 	 */
-	protected String pollArg(String name) throws MissingMandatoryArgumentException {
+	protected String pollArg(String name) throws MissingCliArgumentException {
 		return arguments.pollArg(name);
 	}
 

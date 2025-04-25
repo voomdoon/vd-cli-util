@@ -10,8 +10,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
-import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
+import de.voomdoon.util.cli.args.exception.option.CliOptionException;
+import de.voomdoon.util.cli.args.exception.option.MissingCliOptionValueException;
 
 /**
  * Accessor for CLi arguments and options.
@@ -37,10 +38,10 @@ public class Arguments {
 	 * 
 	 * @param args
 	 * @param options
-	 * @throws InvalidProgramOptionException
+	 * @throws CliOptionException
 	 * @since 0.1.0
 	 */
-	public Arguments(String[] args, Set<Option> options) throws InvalidProgramOptionException {
+	public Arguments(String[] args, Set<Option> options) throws CliOptionException {
 		this.args = new LinkedList<>(Arrays.asList(args));
 
 		parseOptions(options);
@@ -82,12 +83,12 @@ public class Arguments {
 	 * @param name
 	 *            name of the argument
 	 * @return {@link String}
-	 * @throws MissingMandatoryArgumentException
+	 * @throws MissingCliArgumentException
 	 * @since 0.1.0
 	 */
-	public String pollArg(String name) throws MissingMandatoryArgumentException {
+	public String pollArg(String name) throws MissingCliArgumentException {
 		if (args.isEmpty()) {
-			throw new MissingMandatoryArgumentException(name);
+			throw new MissingCliArgumentException(name);
 		}
 
 		return args.poll();
@@ -96,11 +97,11 @@ public class Arguments {
 	/**
 	 * @param options
 	 *            {@link Set} of {@link Option}
-	 * @throws InvalidProgramOptionException
+	 * @throws CliOptionException
 	 * 
 	 * @since 0.1.0
 	 */
-	private void parseOptions(Set<Option> options) throws InvalidProgramOptionException {
+	private void parseOptions(Set<Option> options) throws CliOptionException {
 		Map<String, Option> longNameOptions = options.stream()
 				.collect(Collectors.toMap(Option::longName, Function.identity()));
 
@@ -125,17 +126,17 @@ public class Arguments {
 
 	/**
 	 * @param option
-	 * @throws InvalidProgramOptionException
+	 * @throws CliOptionException
 	 * @since 0.1.0
 	 */
-	private void parseOptionValue(Option option) throws InvalidProgramOptionException {
+	private void parseOptionValue(Option option) throws CliOptionException {
 		args.poll();
 
 		if (option.hasValue()) {
 			if (!args.isEmpty()) {
 				optionValues.put(option, args.poll());
 			} else {
-				throw new InvalidProgramOptionException(option, "missing value");
+				throw new MissingCliOptionValueException(option);
 			}
 		} else {
 			optionValues.put(option, "true");

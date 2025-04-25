@@ -14,7 +14,7 @@ import de.voomdoon.logging.LogEventHandler;
 import de.voomdoon.logging.LogLevel;
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.testing.tests.TestBase;
-import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
+import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
 import de.voomdoon.util.cli.test.ErrorTestProgram;
 import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.testing.ProgramTestingUtil;
@@ -84,7 +84,7 @@ class ProgramRunnerlTest {
 
 			assertThatThrownBy(() -> ProgramRunner.run(TestProgramWithMandatoryArgument.class, args))
 					.isInstanceOf(ProgramExecutionException.class)
-					.hasCauseInstanceOf(MissingMandatoryArgumentException.class)//
+					.hasCauseInstanceOf(MissingCliArgumentException.class)//
 					.cause().hasMessageContaining(TestProgramWithMandatoryArgument.ARGUMENT_NAME);
 		}
 	}
