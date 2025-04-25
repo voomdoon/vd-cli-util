@@ -23,7 +23,7 @@ public class ProgramTestingUtil {
 		// FEATURE add soft check with logging whether called within test scope
 
 		try {
-			Class<?> clazz = Class.forName("de.voomdoon.util.cli.ProgramRunUtil");
+			Class<?> clazz = Class.forName("de.voomdoon.util.cli.ProgramRunner");
 			var method = clazz.getDeclaredMethod("enableTestingMode");
 			method.setAccessible(true);
 			method.invoke(null);
