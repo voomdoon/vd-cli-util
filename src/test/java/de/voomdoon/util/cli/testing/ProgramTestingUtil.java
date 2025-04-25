@@ -1,9 +1,10 @@
 package de.voomdoon.util.cli.testing;
 
+import de.voomdoon.util.cli.Program;
 import lombok.experimental.UtilityClass;
 
 /**
- * DOCME add JavaDoc for
+ * Testing utility for {@link Program}.
  *
  * @author André Schulz
  *
@@ -13,7 +14,8 @@ import lombok.experimental.UtilityClass;
 public class ProgramTestingUtil {
 
 	/**
-	 * DOCME add JavaDoc for method enableTestingMode
+	 * Enables testing mode for the {@link Program} class. <br>
+	 * This disables calling {@link System#exit(int)} but throws {@code ProgramExecutionException}.
 	 * 
 	 * @since 0.2.0
 	 */

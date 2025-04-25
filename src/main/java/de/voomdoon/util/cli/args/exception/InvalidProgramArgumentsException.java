@@ -15,8 +15,6 @@ public abstract class InvalidProgramArgumentsException extends Exception {
 	private static final long serialVersionUID = -1062301974641691277L;
 
 	/**
-	 * DOCME add JavaDoc for constructor InvalidProgramArgumentsException
-	 * 
 	 * @param message
 	 * @since 0.1.0
 	 */

@@ -14,7 +14,7 @@ import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
 import de.voomdoon.util.cli.args.exception.MissingMandatoryArgumentException;
 
 /**
- * DOCME add JavaDoc for
+ * Accessor for CLi arguments and options.
  *
  * @author André Schulz
  *

@@ -17,7 +17,7 @@ import de.voomdoon.util.cli.ProgramTest.HelpTestBase;
 import de.voomdoon.util.commons.SystemOutput;
 
 /**
- * DOCME add JavaDoc for
+ * Tests for {@link MainBase}.
  *
  * @author André Schulz
  *

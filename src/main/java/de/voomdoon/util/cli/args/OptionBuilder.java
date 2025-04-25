@@ -3,8 +3,8 @@ package de.voomdoon.util.cli.args;
 import java.util.function.Consumer;
 
 /**
- * DOCME add JavaDoc for
- *
+ * Builder for {@link Option}.
+ * 
  * @author André Schulz
  *
  * @since 0.1.0

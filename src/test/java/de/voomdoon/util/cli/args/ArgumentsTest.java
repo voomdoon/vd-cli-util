@@ -13,7 +13,7 @@ import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.exception.InvalidProgramOptionException;
 
 /**
- * DOCME add JavaDoc for
+ * Tests for {@link Arguments}.
  *
  * @author André Schulz
  *

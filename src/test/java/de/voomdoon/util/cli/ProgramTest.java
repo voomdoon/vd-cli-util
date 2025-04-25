@@ -24,7 +24,7 @@ import de.voomdoon.util.cli.testing.ProgramTestingUtil;
 import de.voomdoon.util.commons.SystemOutput;
 
 /**
- * DOCME add JavaDoc for
+ * Tests for {@link Program}.
  *
  * @author André Schulz
  *
@@ -33,6 +33,8 @@ import de.voomdoon.util.commons.SystemOutput;
 class ProgramTest extends LoggingCheckingTestBase {
 
 	/**
+	 * Tests for {@link Program#getOptionValue(Option)}.
+	 * 
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0
@@ -187,7 +189,7 @@ class ProgramTest extends LoggingCheckingTestBase {
 	}
 
 	/**
-	 * DOCME add JavaDoc for ProgramTest
+	 * Tests for {@link Program#pollArg(String)}.
 	 *
 	 * @author André Schulz
 	 *
