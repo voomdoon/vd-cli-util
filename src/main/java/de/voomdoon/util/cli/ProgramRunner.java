@@ -123,6 +123,8 @@ class ProgramRunner {
 			program.runProgram();
 		} catch (CliInputException e) {
 			throw e;
+		} catch (ProgramRunException e) {
+			throw e;// TESTME
 		} catch (Exception e) {
 			throw new ProgramRunException(e);
 		}
