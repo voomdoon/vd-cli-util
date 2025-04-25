@@ -2,7 +2,6 @@ package de.voomdoon.util.cli;
 
 import java.lang.reflect.Constructor;
 
-import de.voomdoon.logging.LogManager;
 import de.voomdoon.util.cli.args.exception.CliInputException;
 import lombok.experimental.UtilityClass;
 
@@ -91,12 +90,8 @@ class ProgramRunner {
 	 */
 	private static void handleError(Exception exception, Class<? extends Program> programmClass) {
 		if (!testingMode) {
+			// TESTME
 			System.err.println(exception.getMessage());
-		} else {
-			LogManager.getLogger(programmClass).fatal(exception.getMessage());
-		}
-
-		if (!testingMode) {
 			System.exit(-1);// FEATURE #56: use different exit codes for different errors
 		} else {
 			throw new ProgramExecutionException(exception);
@@ -111,8 +106,7 @@ class ProgramRunner {
 	 * @throws CliInputException
 	 * @since 0.1.0
 	 */
-	private static void runInternal(Class<? extends Program> clazz, String[] args)
-			throws CliInputException {
+	private static void runInternal(Class<? extends Program> clazz, String[] args) throws CliInputException {
 		Program program;
 
 		try {

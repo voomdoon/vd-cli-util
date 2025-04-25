@@ -1,6 +1,5 @@
 package de.voomdoon.util.cli;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
@@ -11,11 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import de.voomdoon.logging.LogEvent;
 import de.voomdoon.logging.LogEventHandler;
-import de.voomdoon.logging.LogLevel;
-import de.voomdoon.logging.LogManager;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
-import de.voomdoon.util.cli.test.ErrorTestProgram;
 import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.testing.ProgramTestingUtil;
 
@@ -26,7 +22,7 @@ import de.voomdoon.util.cli.testing.ProgramTestingUtil;
  *
  * @since 0.1.0
  */
-class ProgramRunnerlTest {
+class ProgramRunnerTest {
 
 	/**
 	 * Tests for {@link ProgramRunner#run(Class, String[])}
@@ -55,26 +51,6 @@ class ProgramRunnerlTest {
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_error_isLogged() throws Exception {
-			logTestStart();
-
-			ProgramTestingUtil.enableTestingMode();
-
-			LogManager.addLogEventHandler(this);
-
-			try {
-				ProgramRunner.run(ErrorTestProgram.class, new String[0]);
-			} catch (Exception e) {
-				logger.debug("ignored exception: " + e.getMessage(), e);
-			}
-
-			assertThat(logEvents.stream().filter(e -> e.getLevel() == LogLevel.FATAL).toList()).hasSize(1);
-		}
-
-		/**
-		 * @since 0.1.0
-		 */
-		@Test
 		void test_error_MissingMandatoryArgumentException() throws Exception {
 			logTestStart();
 
@@ -83,8 +59,7 @@ class ProgramRunnerlTest {
 			String[] args = new String[0];
 
 			assertThatThrownBy(() -> ProgramRunner.run(TestProgramWithMandatoryArgument.class, args))
-					.isInstanceOf(ProgramExecutionException.class)
-					.hasCauseInstanceOf(MissingCliArgumentException.class)//
+					.isInstanceOf(ProgramExecutionException.class).hasCauseInstanceOf(MissingCliArgumentException.class)//
 					.cause().hasMessageContaining(TestProgramWithMandatoryArgument.ARGUMENT_NAME);
 		}
 	}

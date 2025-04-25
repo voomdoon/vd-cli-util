@@ -11,16 +11,13 @@ import org.assertj.core.api.AbstractStringAssert;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import de.voomdoon.logging.LogLevel;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
 import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
 import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 import de.voomdoon.util.cli.test.NoOpTestProgram;
-import de.voomdoon.util.cli.test.TestProgramWithMandatoryArgument;
 import de.voomdoon.util.cli.test.TestProgramWithOptionWithLongNameAndValue;
-import de.voomdoon.util.cli.testing.ProgramTestingUtil;
 import de.voomdoon.util.commons.SystemOutput;
 
 /**
@@ -289,29 +286,6 @@ class ProgramTest extends LoggingCheckingTestBase {
 			protected void run() throws Exception {
 				runProgramCallCount.incrementAndGet();
 			}
-		}
-
-		/**
-		 * DOCME add JavaDoc for method test_error_missingMandatoryArgument_nameIsPrinted
-		 * 
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_error_logging_containsName() throws Exception {
-			logTestStart();
-
-			ProgramTestingUtil.enableTestingMode();
-
-			try {
-				TestProgramWithMandatoryArgument.run(new String[0]);
-			} catch (Exception e) {
-				logger.debug("ignored exception: " + e.getMessage(), e);
-			}
-
-			assertThat(ProgramTest.super.getLogCache().getLogEvents(LogLevel.FATAL)).hasSize(1);
-			assertThat(ProgramTest.super.getLogCache().getLogEvents(LogLevel.FATAL).get(0).getMessage().toString())
-					.contains(TestProgramWithMandatoryArgument.ARGUMENT_NAME);
-			ProgramTest.super.getLogCache().clear();
 		}
 
 		/**

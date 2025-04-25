@@ -7,7 +7,7 @@ package de.voomdoon.util.cli;
  *
  * @since 0.2.0
  */
-class ProgramExecutionException extends RuntimeException {
+public class ProgramExecutionException extends RuntimeException {
 
 	/**
 	 * @since 0.2.0
