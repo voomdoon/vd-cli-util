@@ -1,7 +1,5 @@
 package de.voomdoon.util.cli;
 
-import de.voomdoon.util.cli.args.exception.option.CliOptionException;
-
 /**
  * Exception thrown by {@link Program#run()}.
  *
@@ -25,19 +23,6 @@ public class ProgramRunException extends RuntimeException {
 	 * DOCME add JavaDoc for constructor ProgramRunException
 	 * 
 	 * @param message
-	 * @param cause
-	 * @since 0.1.0
-	 */
-	public ProgramRunException(String message, CliOptionException cause) {
-		super(message, cause);
-
-		this.helpString = null;
-	}
-
-	/**
-	 * DOCME add JavaDoc for constructor ProgramRunException
-	 * 
-	 * @param message
 	 * @param helpString
 	 * @since 0.1.0
 	 */
@@ -54,6 +39,7 @@ public class ProgramRunException extends RuntimeException {
 	 * @since 0.1.0
 	 */
 	public ProgramRunException(Throwable cause) {
+		// TESTME
 		super(cause);
 
 		this.helpString = null;

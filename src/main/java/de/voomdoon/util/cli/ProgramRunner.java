@@ -32,7 +32,7 @@ class ProgramRunner {
 		try {
 			runInternal(clazz, args);
 		} catch (Exception e) {
-			handleError(e, clazz);
+			handleError(e, clazz);// TESTME
 		}
 	}
 
@@ -92,7 +92,8 @@ class ProgramRunner {
 		if (!testingMode) {
 			// TESTME
 			System.err.println(exception.getMessage());
-			System.exit(-1);// FEATURE #56: use different exit codes for different errors
+			// FEATURE #56: use different exit codes for different errors
+			System.exit(-1);
 		} else {
 			throw new ProgramExecutionException(exception);
 		}
@@ -126,7 +127,7 @@ class ProgramRunner {
 		} catch (ProgramRunException e) {
 			throw e;// TESTME
 		} catch (Exception e) {
-			throw new ProgramRunException(e);
+			throw new ProgramRunException(e);// TESTME
 		}
 	}
 }
