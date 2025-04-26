@@ -5,7 +5,7 @@ import java.util.Objects;
 import de.voomdoon.util.cli.args.Option;
 
 /**
- * {@link CliOptionException} for missing {@link Option}.
+ * {@link CliOptionException} for missing {@link Option} value.
  *
  * @author André Schulz
  *
