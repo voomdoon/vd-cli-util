@@ -21,6 +21,8 @@ public class OptionBuilder {
 	 */
 	private String longName;
 
+	private boolean mandatory;
+
 	/**
 	 * @since 0.1.0
 	 */
@@ -41,7 +43,7 @@ public class OptionBuilder {
 	 * @since 0.1.0
 	 */
 	public Option build() {
-		Option option = new Option(longName, valueName);
+		Option option = new Option(longName, valueName, mandatory);
 
 		callback.accept(option);
 
@@ -55,6 +57,18 @@ public class OptionBuilder {
 	 */
 	public OptionBuilder hasValue(String valueName) {
 		this.valueName = valueName;
+
+		return this;
+	}
+
+	/**
+	 * DOCME add JavaDoc for method isMandatory
+	 * 
+	 * @return
+	 * @since 0.1.0
+	 */
+	public OptionBuilder isMandatory() {
+		this.mandatory = true;
 
 		return this;
 	}

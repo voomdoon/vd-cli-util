@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
 import de.voomdoon.util.cli.args.exception.option.CliOptionException;
+import de.voomdoon.util.cli.args.exception.option.MissingCliOptionException;
 import de.voomdoon.util.cli.args.exception.option.MissingCliOptionValueException;
 
 /**
@@ -45,6 +46,7 @@ public class Arguments {
 		this.args = new LinkedList<>(Arrays.asList(args));
 
 		parseOptions(options);
+		validate(options);
 	}
 
 	/**
@@ -140,6 +142,21 @@ public class Arguments {
 			}
 		} else {
 			optionValues.put(option, "true");
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for method validate
+	 * 
+	 * @param options
+	 * @throws MissingCliArgumentException
+	 * @since 0.1.0
+	 */
+	private void validate(Set<Option> options) throws MissingCliOptionException {
+		for (Option option : options) {
+			if (option.mandatory() && !hasOption(option)) {
+				throw new MissingCliOptionException(option);
+			}
 		}
 	}
 }

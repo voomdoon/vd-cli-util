@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.exception.option.CliOptionException;
+import de.voomdoon.util.cli.args.exception.option.MissingCliOptionException;
 
 /**
  * Tests for {@link Arguments}.
@@ -56,6 +57,23 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 
 		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(CliOptionException.class)
 				.hasMessageContaining(ANY_LONG_NAME).hasMessageContaining("value");
+	}
+
+	/**
+	 * DOCME add JavaDoc for method testGetOptionValue_error_mandatoryOptionMissing
+	 * 
+	 * @since 0.1.0
+	 */
+	@Test
+	void testGetOptionValue_error_mandatoryOptionMissing() throws Exception {
+		logTestStart();
+
+		String[] args = new String[0];
+		Set<Option> options = Set
+				.of(new OptionBuilder(this).longName(ANY_LONG_NAME).hasValue(ANY_VALUE_NAME).isMandatory().build());
+
+		assertThatThrownBy(() -> new Arguments(args, options)).isInstanceOf(MissingCliOptionException.class)
+				.hasMessageContaining(ANY_LONG_NAME);
 	}
 
 	/**

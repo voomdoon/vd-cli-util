@@ -9,7 +9,7 @@ package de.voomdoon.util.cli.args;
  *
  * @since 0.1.0
  */
-public record Option(String longName, String valueName) {
+public record Option(String longName, String valueName, boolean mandatory) {
 
 	/**
 	 * @return
