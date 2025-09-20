@@ -35,11 +35,12 @@ public class Arguments {
 	private Map<Option, String> optionValues;
 
 	/**
-	 * DOCME add JavaDoc for constructor Arguments
-	 * 
 	 * @param args
+	 *            command line arguments
 	 * @param options
+	 *            {@link Set} of {@link Option}
 	 * @throws CliOptionException
+	 *             If an option is missing or an option value is missing.
 	 * @since 0.1.0
 	 */
 	public Arguments(String[] args, Set<Option> options) throws CliOptionException {
@@ -146,10 +147,10 @@ public class Arguments {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method validate
-	 * 
 	 * @param options
+	 *            {@link Set} of {@link Option}
 	 * @throws MissingCliArgumentException
+	 *             if a mandatory argument is missing
 	 * @since 0.1.0
 	 */
 	private void validate(Set<Option> options) throws MissingCliOptionException {
