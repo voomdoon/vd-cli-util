@@ -42,7 +42,7 @@ class ArgumentsTest extends TestBase implements Consumer<Option> {
 	 */
 	@Override
 	public void accept(Option option) {
-		// TODO implement accept
+		// accept all
 	}
 
 	/**

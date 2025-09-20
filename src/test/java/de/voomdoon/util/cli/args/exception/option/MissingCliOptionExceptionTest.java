@@ -11,7 +11,7 @@ import de.voomdoon.util.cli.args.Option;
 import de.voomdoon.util.cli.args.OptionBuilder;
 
 /**
- * DOCME add JavaDoc for
+ * Tests for {@link MissingCliOptionException}.
  *
  * @author André Schulz
  *

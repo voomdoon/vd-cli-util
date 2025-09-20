@@ -56,8 +56,6 @@ class ProgramTest extends LoggingCheckingTestBase {
 		}
 
 		/**
-		 * DOCME add JavaDoc for method test_present
-		 * 
 		 * @since 0.1.0
 		 */
 		@Test
@@ -74,6 +72,8 @@ class ProgramTest extends LoggingCheckingTestBase {
 	}
 
 	/**
+	 * Tests for {@link Program#help()}.
+	 * 
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0
@@ -143,9 +143,6 @@ class ProgramTest extends LoggingCheckingTestBase {
 	}
 
 	/**
-	 * 
-	 * DOCME add JavaDoc for ProgramTest
-	 *
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0

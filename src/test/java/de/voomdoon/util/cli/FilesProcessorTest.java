@@ -21,7 +21,7 @@ import de.voomdoon.testing.file.WithTempInputDirectories;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 
 /**
- * DOCME add JavaDoc for
+ * Tests for {@link FilesProcessor}.
  *
  * @author André Schulz
  *
@@ -34,8 +34,6 @@ import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 class FilesProcessorTest extends LoggingCheckingTestBase {
 
 	/**
-	 * DOCME add JavaDoc for method test_directory
-	 * 
 	 * @since 0.1.0
 	 */
 	@Test
@@ -63,8 +61,6 @@ class FilesProcessorTest extends LoggingCheckingTestBase {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method testProcess_File
-	 * 
 	 * @throws IOException
 	 * 
 	 * @since 0.1.0
