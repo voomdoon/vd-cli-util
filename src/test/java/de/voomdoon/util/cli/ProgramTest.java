@@ -12,13 +12,13 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
+import de.voomdoon.testing.system.SystemPrintStreamCapturer;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.args.Arguments;
 import de.voomdoon.util.cli.args.exception.argument.MissingCliArgumentException;
 import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 import de.voomdoon.util.cli.test.NoOpTestProgram;
 import de.voomdoon.util.cli.test.TestProgramWithOptionWithLongNameAndValue;
-import de.voomdoon.util.commons.SystemOutput;
 
 /**
  * Tests for {@link Program}.
@@ -174,11 +174,11 @@ class ProgramTest extends LoggingCheckingTestBase {
 				throw new RuntimeException("Error at 'initRunAndAssert': " + e.getMessage(), e);
 			}
 
-			SystemOutput output = SystemOutput.run(() -> program.runProgram());
+			SystemPrintStreamCapturer output = SystemPrintStreamCapturer.run(() -> program.runProgram());
 
 			output.log(logger);
 
-			return assertThat(output).extracting(SystemOutput::getOut).asString();
+			return assertThat(output).extracting(SystemPrintStreamCapturer::getOut).asString();
 		}
 	}
 

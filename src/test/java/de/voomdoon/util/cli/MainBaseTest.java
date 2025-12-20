@@ -8,13 +8,13 @@ import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import de.voomdoon.testing.system.SystemPrintStreamCapturer;
 import de.voomdoon.testing.tests.TestBase;
 import de.voomdoon.util.cli.MainBaseTest.TestMainBases.TestMain;
 import de.voomdoon.util.cli.MainBaseTest.TestMainBases.TestMainWithTwoSubPrograms;
 import de.voomdoon.util.cli.MainBaseTest.TestPrograms.InvalidTestProgramWithoutMainMethod;
 import de.voomdoon.util.cli.MainBaseTest.TestPrograms.ValidTestProgram;
 import de.voomdoon.util.cli.ProgramTest.HelpTestBase;
-import de.voomdoon.util.commons.SystemOutput;
 
 /**
  * Tests for {@link MainBase}.
@@ -238,9 +238,9 @@ class MainBaseTest {
 			MainBase main = new TestMain();
 			main.init(new String[0]);
 
-			SystemOutput output = SystemOutput.run(() -> main.runProgram());
+			SystemPrintStreamCapturer output = SystemPrintStreamCapturer.run(() -> main.runProgram());
 
-			assertThat(output).extracting(SystemOutput::getOut).asString().contains("My-Main");
+			assertThat(output).extracting(SystemPrintStreamCapturer::getOut).asString().contains("My-Main");
 		}
 
 		/**
