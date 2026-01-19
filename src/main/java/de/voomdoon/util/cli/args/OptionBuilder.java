@@ -21,6 +21,9 @@ public class OptionBuilder {
 	 */
 	private String longName;
 
+	/**
+	 * @since 0.1.0
+	 */
 	private boolean mandatory;
 
 	/**
