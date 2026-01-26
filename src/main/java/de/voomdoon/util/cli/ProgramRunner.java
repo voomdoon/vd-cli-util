@@ -92,6 +92,7 @@ class ProgramRunner {
 		if (!testingMode) {
 			// TESTME
 			System.err.println(exception.getMessage());
+			exception.printStackTrace(System.err);
 			// FEATURE #56: use different exit codes for different errors
 			System.exit(-1);
 		} else {
