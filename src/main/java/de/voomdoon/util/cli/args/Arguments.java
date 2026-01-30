@@ -15,6 +15,8 @@ import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 import de.voomdoon.util.cli.args.exception.option.MissingCliOptionException;
 import de.voomdoon.util.cli.args.exception.option.MissingCliOptionValueException;
 
+//FIXME fail on unknown option
+
 /**
  * Accessor for CLi arguments and options.
  *
