@@ -32,9 +32,10 @@ public class OptionBuilder {
 	private String valueName;
 
 	/**
-	 * DOCME add JavaDoc for constructor OptionBuilder
+	 * Creates a builder that passes built options to a callback.
 	 * 
 	 * @param callback
+	 *            callback as {@link Consumer}
 	 * @since 0.1.0
 	 */
 	public OptionBuilder(Consumer<Option> callback) {
@@ -42,7 +43,9 @@ public class OptionBuilder {
 	}
 
 	/**
-	 * @return
+	 * Builds the option.
+	 *
+	 * @return {@link Option}
 	 * @since 0.1.0
 	 */
 	public Option build() {
@@ -54,7 +57,10 @@ public class OptionBuilder {
 	}
 
 	/**
+	 * Configures this option to accept a value.
+	 *
 	 * @param valueName
+	 *            value name as {@link String}
 	 * @return {@link OptionBuilder}
 	 * @since 0.1.0
 	 */
@@ -65,9 +71,9 @@ public class OptionBuilder {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method isMandatory
+	 * Marks this option as mandatory.
 	 * 
-	 * @return
+	 * @return this {@link OptionBuilder}
 	 * @since 0.1.0
 	 */
 	public OptionBuilder isMandatory() {
@@ -77,8 +83,10 @@ public class OptionBuilder {
 	}
 
 	/**
+	 * Sets the long option name.
+	 *
 	 * @param longName
-	 *            longName
+	 *            long name as {@link String}
 	 * @return {@link OptionBuilder}
 	 * @since 0.1.0
 	 */

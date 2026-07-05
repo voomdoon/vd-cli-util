@@ -116,8 +116,8 @@ public abstract class Program {
 	/**
 	 * Intended to be called by {@code main} method.
 	 * 
-	 * @param clazz
 	 * @param args
+	 *            command line arguments as {@link String} array
 	 * @since 0.1.0
 	 */
 	public static void run(String[] args) {
@@ -125,6 +125,8 @@ public abstract class Program {
 	}
 
 	/**
+	 * Logger for the concrete program class.
+	 *
 	 * @since 0.1.0
 	 */
 	protected final Logger logger = LogManager.getLogger(getClass());
@@ -140,9 +142,7 @@ public abstract class Program {
 	private ProgramOptions options;
 
 	/**
-	 * DOCME add JavaDoc for constructor Program
-	 * 
-	 * @param args
+	 * Creates a command line program.
 	 * @since 0.1.0
 	 */
 	protected Program() {
@@ -150,9 +150,9 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method addOption
+	 * Starts building an option.
 	 * 
-	 * @return
+	 * @return {@link OptionBuilder}
 	 * @since 0.1.0
 	 */
 	protected OptionBuilder addOption() {
@@ -160,7 +160,9 @@ public abstract class Program {
 	}
 
 	/**
-	 * @return arguments
+	 * Returns the parsed arguments.
+	 *
+	 * @return {@link Arguments}
 	 * @since 0.1.0
 	 */
 	protected Arguments getArguments() {
@@ -168,9 +170,9 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getHelpGenerator
+	 * Returns the help generator.
 	 * 
-	 * @return
+	 * @return {@link HelpGenerator}
 	 * @since 0.1.0
 	 */
 	protected HelpGenerator getHelpGenerator() {
@@ -178,9 +180,9 @@ public abstract class Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method getName
+	 * Returns the program name.
 	 * 
-	 * @return
+	 * @return program name as {@link String}
 	 * @since 0.1.0
 	 */
 	protected String getName() {
@@ -188,6 +190,8 @@ public abstract class Program {
 	}
 
 	/**
+	 * Returns the value supplied for an option.
+	 *
 	 * @param option
 	 *            {@link Option}
 	 * @return {@link Optional} of {@link String}
@@ -198,7 +202,12 @@ public abstract class Program {
 	}
 
 	/**
+	 * Initializes the program from command line arguments.
+	 *
+	 * @param args
+	 *            command line arguments as {@link String} array
 	 * @throws CliOptionException
+	 *             if an option is invalid
 	 * 
 	 * @since 0.1.0
 	 */
@@ -210,6 +219,8 @@ public abstract class Program {
 	}
 
 	/**
+	 * Initializes program options.
+	 *
 	 * @since 0.1.0
 	 */
 	protected void initOptions() {
@@ -217,10 +228,13 @@ public abstract class Program {
 	}
 
 	/**
+	 * Removes and returns the next positional argument.
+	 *
 	 * @param name
 	 *            name of the argument
 	 * @return {@link String}
 	 * @throws MissingCliArgumentException
+	 *             if no positional argument remains
 	 * @since 0.1.0
 	 */
 	protected String pollArg(String name) throws MissingCliArgumentException {
@@ -231,12 +245,16 @@ public abstract class Program {
 	 * Main method to be executed.
 	 * 
 	 * @throws Exception
+	 *             if program execution fails
 	 * @since 0.1.0
 	 */
 	protected abstract void run() throws Exception;
 
 	/**
+	 * Runs the program or displays help.
+	 *
 	 * @throws Exception
+	 *             if program execution fails
 	 * @since 0.1.0
 	 */
 	protected void runProgram() throws Exception {

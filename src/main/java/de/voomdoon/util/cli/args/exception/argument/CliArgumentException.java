@@ -12,11 +12,15 @@ import de.voomdoon.util.cli.args.exception.CliInputException;
 public abstract class CliArgumentException extends CliInputException {
 
 	/**
+	 * Serialization version.
+	 *
 	 * @since 0.2.0
 	 */
 	private static final long serialVersionUID = 8215436733104103632L;
 
 	/**
+	 * Creates a CLI argument exception.
+	 *
 	 * @param message
 	 *            {@link String}
 	 * @since 0.2.0

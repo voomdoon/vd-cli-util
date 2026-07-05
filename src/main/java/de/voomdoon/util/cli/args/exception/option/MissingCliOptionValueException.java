@@ -14,11 +14,15 @@ import de.voomdoon.util.cli.args.Option;
 public class MissingCliOptionValueException extends CliOptionException {
 
 	/**
+	 * Serialization version.
+	 *
 	 * @since 0.2.0
 	 */
 	private static final long serialVersionUID = 2327175536166172631L;
 
 	/**
+	 * Creates an exception for an option without its required value.
+	 *
 	 * @param option
 	 *            {@link Option}
 	 * @since 0.2.0

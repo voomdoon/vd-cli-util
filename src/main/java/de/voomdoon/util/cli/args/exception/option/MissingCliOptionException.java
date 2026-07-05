@@ -19,10 +19,10 @@ public class MissingCliOptionException extends CliOptionException {
 	private static final long serialVersionUID = 6655911921020642425L;
 
 	/**
-	 * DOCME add JavaDoc for constructor MissingCliOptionException
+	 * Creates an exception for a missing option.
 	 * 
 	 * @param option
-	 * @param message
+	 *            missing {@link Option}
 	 * @since 0.2.0
 	 */
 	public MissingCliOptionException(Option option) {

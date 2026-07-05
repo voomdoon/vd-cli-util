@@ -15,9 +15,10 @@ public class ProgramExecutionException extends RuntimeException {
 	private static final long serialVersionUID = 8209674709863855600L;
 
 	/**
-	 * DOCME add JavaDoc for constructor ProgramRunningException
+	 * Creates an exception wrapping a program execution failure.
 	 * 
 	 * @param cause
+	 *            underlying {@link Throwable}
 	 * @since 0.2.0
 	 */
 	public ProgramExecutionException(Throwable cause) {

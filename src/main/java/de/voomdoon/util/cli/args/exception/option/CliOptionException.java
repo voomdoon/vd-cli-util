@@ -37,6 +37,8 @@ public class CliOptionException extends CliInputException {
 	}
 
 	/**
+	 * Creates a CLI option exception.
+	 *
 	 * @param option
 	 *            {@link Option}
 	 * @param message

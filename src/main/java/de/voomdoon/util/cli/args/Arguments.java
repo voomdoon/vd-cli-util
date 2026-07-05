@@ -27,18 +27,24 @@ import de.voomdoon.util.cli.args.exception.option.MissingCliOptionValueException
 public class Arguments {
 
 	/**
+	 * Remaining positional arguments.
+	 *
 	 * @since 0.1.0
 	 */
 	private LinkedList<String> args;
 
 	/**
+	 * Values indexed by their {@link Option}.
+	 *
 	 * @since 0.1.0
 	 */
 	private Map<Option, String> optionValues;
 
 	/**
+	 * Creates parsed command line arguments.
+	 *
 	 * @param args
-	 *            command line arguments
+	 *            command line arguments as {@link String} array
 	 * @param options
 	 *            {@link Set} of {@link Option}
 	 * @throws CliOptionException
@@ -53,6 +59,8 @@ public class Arguments {
 	}
 
 	/**
+	 * Returns the value supplied for an option.
+	 *
 	 * @param option
 	 *            {@link Option}
 	 * @return {@link Optional} of {@link String}
@@ -63,6 +71,8 @@ public class Arguments {
 	}
 
 	/**
+	 * Reports whether an option was supplied.
+	 *
 	 * @param option
 	 *            {@link Option}
 	 * @return {@code true} or {@code false}
@@ -73,7 +83,8 @@ public class Arguments {
 	}
 
 	/**
-	 * 
+	 * Removes and returns all remaining positional arguments.
+	 *
 	 * @return {@link List} of all remaining arguments
 	 * @since 0.1.0
 	 */
@@ -85,10 +96,13 @@ public class Arguments {
 	}
 
 	/**
+	 * Removes and returns the next positional argument.
+	 *
 	 * @param name
 	 *            name of the argument
 	 * @return {@link String}
 	 * @throws MissingCliArgumentException
+	 *             if no positional argument remains
 	 * @since 0.1.0
 	 */
 	public String pollArg(String name) throws MissingCliArgumentException {

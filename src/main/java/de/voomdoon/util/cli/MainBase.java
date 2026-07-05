@@ -16,6 +16,12 @@ import de.voomdoon.util.cli.args.exception.option.CliOptionException;
 public abstract class MainBase extends Program {
 
 	/**
+	 * Creates a main program supporting subprograms.
+	 */
+	protected MainBase() {
+	}
+
+	/**
 	 * @since 0.1.0
 	 */
 	private class MainBaseHelpSupplier implements HelpGenerator {
@@ -86,10 +92,12 @@ public abstract class MainBase extends Program {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method registerSubMain
+	 * Registers a subprogram.
 	 * 
 	 * @param key
+	 *            subprogram key as {@link String}
 	 * @param clazz
+	 *            subprogram {@link Class}
 	 * @since 0.1.0
 	 */
 	protected void registerSubMain(String key, Class<? extends Program> clazz) {
@@ -105,8 +113,6 @@ public abstract class MainBase extends Program {
 
 	/**
 	 * DOCME add JavaDoc for method run
-	 * 
-	 * @throws InvalidSubProgramException
 	 * 
 	 * @since 0.1.0
 	 */

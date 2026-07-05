@@ -17,7 +17,10 @@ public abstract class CliInputException extends Exception {
 	private static final long serialVersionUID = -1062301974641691277L;
 
 	/**
+	 * Creates a CLI input exception.
+	 *
 	 * @param message
+	 *            detail message as {@link String}
 	 * @since 0.1.0
 	 */
 	protected CliInputException(String message) {
