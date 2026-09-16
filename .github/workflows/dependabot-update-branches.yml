@@ -11,9 +11,7 @@ concurrency:
   group: dependabot-update-branches
   cancel-in-progress: false
 
-permissions:
-  issues: write
-  pull-requests: read
+permissions: {}
 
 jobs:
   update:
